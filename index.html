@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>География - лучший предмет | Викторина по климатическим поясам</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .authors {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            opacity: 0.9;
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 2px solid rgba(255,255,255,0.2);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+            to { box-shadow: 0 5px 20px rgba(255,255,255,0.3); }
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .teacher-tribute {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .geometry-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: rotate(5deg);
+        }
+
+        .intro-screen, .quiz-screen, .result-screen {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.5s ease;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question-number {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #ffcc00;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .options-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .option {
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .option:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .option.selected {
+            background: rgba(50, 150, 255, 0.4);
+            border-color: #3296ff;
+            transform: scale(1.02);
+        }
+
+        .option.correct {
+            background: rgba(50, 200, 100, 0.4);
+            border-color: #32c864;
+        }
+
+        .option.incorrect {
+            background: rgba(255, 80, 80, 0.4);
+            border-color: #ff5050;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: block;
+            margin: 20px auto;
+            min-width: 200px;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            background: rgba(255,255,255,0.2);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .progress-container {
+            margin: 30px 0;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 5px;
+        }
+
+        .result-screen {
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 4rem;
+            margin: 20px 0;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255,204,0,0.5);
+        }
+
+        .rating-container {
+            margin: 30px 0;
+        }
+
+        .rating-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .rating-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .rating-option {
+            background: rgba(255,255,255,0.1);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .rating-option:hover {
+            transform: scale(1.1);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .rating-option.selected {
+            background: rgba(50, 150, 255, 0.4);
+            border-color: #3296ff;
+            transform: scale(1.2);
+        }
+
+        .emoji-display {
+            font-size: 5rem;
+            margin: 20px 0;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-20px); }
+        }
+
+        .shapes-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid #00c6ff;
+        }
+
+        .square {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            transform: rotate(45deg);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-1000px) rotate(720deg); }
+        }
+
+        .correct-answer {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(50, 200, 100, 0.2);
+            border-radius: 10px;
+            border-left: 5px solid #32c864;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .multi-select-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .multi-select-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .multi-select-option:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .multi-select-option.selected {
+            background: rgba(50, 150, 255, 0.4);
+        }
+
+        .multi-select-option.correct {
+            background: rgba(50, 200, 100, 0.4);
+        }
+
+        .multi-select-option.incorrect {
+            background: rgba(255, 80, 80, 0.4);
+        }
+
+        .multi-select-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid rgba(255,255,255,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .multi-select-option.selected .multi-select-checkbox::after {
+            content: "✓";
+            color: white;
+            font-weight: bold;
+        }
+
+        .multi-select-result {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="shapes-container" id="shapesContainer"></div>
+    
+    <div class="container">
+        <div class="authors">Разработано и написано Алексеем Шатырко и Евгением Базавовым</div>
+        
+        <header>
+            <h1>Климатические пояса Земли</h1>
+            <div class="subtitle">Проверьте свои знания географии!</div>
+            <div class="geometry-badge">География - лучший предмет!</div>
+            <div class="teacher-tribute">Лучший учитель - Вера Алексеевна!</div>
+        </header>
+        
+        <div class="intro-screen" id="introScreen">
+            <h2>Добро пожаловать в викторину!</h2>
+            <p>Эта викторина проверит ваши знания о климатических поясах Земли, их особенностях и факторах формирования.</p>
+            <p>Вам предстоит ответить на 25 вопросов, после которых вы получите оценку своих знаний.</p>
+            <p>Удачи!</p>
+            <button class="btn" id="startBtn">Начать викторину</button>
+        </div>
+        
+        <div class="quiz-screen hidden" id="quizScreen">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progressBar"></div>
+                </div>
+                <div class="question-number" id="progressText">Вопрос 1 из 25</div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question-text" id="questionText"></div>
+                <div class="options-container" id="optionsContainer"></div>
+            </div>
+            
+            <button class="btn" id="nextBtn" disabled>Следующий вопрос</button>
+        </div>
+        
+        <div class="result-screen hidden" id="resultScreen">
+            <h2>Викторина завершена!</h2>
+            <div class="score-display" id="scoreDisplay"></div>
+            <p id="resultText"></p>
+            
+            <div class="rating-container">
+                <div class="rating-title">Оцените викторину:</div>
+                <div class="rating-options" id="ratingOptions">
+                    <div class="rating-option" data-rating="1">1</div>
+                    <div class="rating-option" data-rating="2">2</div>
+                    <div class="rating-option" data-rating="3">3</div>
+                    <div class="rating-option" data-rating="4">4</div>
+                    <div class="rating-option" data-rating="5">5</div>
+                    <div class="rating-option" data-rating="6">6</div>
+                    <div class="rating-option" data-rating="7">7</div>
+                    <div class="rating-option" data-rating="8">8</div>
+                    <div class="rating-option" data-rating="9">9</div>
+                    <div class="rating-option" data-rating="10">10</div>
+                </div>
+                <div class="emoji-display" id="emojiDisplay">😊</div>
+                <button class="btn" id="restartBtn">Пройти еще раз</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Вопросы для викторины
+        const questions = [
+            {
+                question: "Какой климатообразующий фактор считается главнейшим?",
+                options: [
+                    "Географическая широта",
+                    "Удаленность от океана",
+                    "Рельеф местности",
+                    "Океанические течения"
+                ],
+                correct: 0,
+                explanation: "Географическая широта - главнейший фактор формирования климата, так как от неё зависит угол падения солнечных лучей и распределение тепла на Земле."
+            },
+            {
+                question: "Какое течение делает Мурманск незамерзающим портом?",
+                options: [
+                    "Лабрадорское",
+                    "Северо-Атлантическое",
+                    "Куросио",
+                    "Гольфстрим"
+                ],
+                correct: 1,
+                explanation: "Тёплое Северо-Атлантическое течение оказывает отепляющее действие на северо-западные районы Европы, благодаря чему Мурманск является незамерзающим портом."
+            },
+            {
+                question: "Что определяет континентальность климата?",
+                options: [
+                    "Высота над уровнем моря",
+                    "Удалённость от океанов и морей",
+                    "Направление горных хребтов",
+                    "Тип растительности"
+                ],
+                correct: 1,
+                explanation: "Удалённость от океанов и морей определяет континентальность климата. Чем дальше в глубь материка, тем больше колебания температуры воздуха и меньше количество осадков."
+            },
+            {
+                question: "Сколько основных климатических поясов на Земле?",
+                options: [
+                    "5",
+                    "7",
+                    "9",
+                    "11"
+                ],
+                correct: 1,
+                explanation: "На Земле 7 основных климатических поясов: экваториальный, тропический (в каждом полушарии), умеренный (в каждом полушарии), полярный (арктический и антарктический)."
+            },
+            {
+                question: "Какой климатический пояс один на оба полушария?",
+                options: [
+                    "Тропический",
+                    "Умеренный",
+                    "Экваториальный",
+                    "Субтропический"
+                ],
+                correct: 2,
+                explanation: "Экваториальный пояс - один на оба полушария, в отличие от тропического, умеренного и полярного поясов, которые есть в каждом полушарии."
+            },
+            {
+                question: "Что такое переходные климатические пояса?",
+                options: [
+                    "Пояса с нестабильным климатом",
+                    "Пояса между основными климатическими поясами",
+                    "Пояса в горах",
+                    "Пояса с экстремальным климатом"
+                ],
+                correct: 1,
+                explanation: "Переходные пояса расположены между основными климатическими поясами. Летом сюда приходят воздушные массы из соседнего пояса, более близкого к экватору, а зимой - из более 'полярного' пояса."
+            },
+            {
+                question: "Как холодные течения влияют на климат побережий?",
+                options: [
+                    "Делают климат теплее и влажнее",
+                    "Делают климат холоднее и суше",
+                    "Увеличивают количество осадков",
+                    "Уменьшают амплитуду температур"
+                ],
+                correct: 1,
+                explanation: "Холодные течения делают климат побережий холоднее и суше. В тропиках на побережьях, вдоль которых идут холодные течения, часто расположены пустыни."
+            },
+            {
+                question: "Какой тип климата характерен для субтропического пояса с жарким сухим летом и прохладной дождливой зимой?",
+                options: [
+                    "Муссонный",
+                    "Средиземноморский",
+                    "Резко континентальный",
+                    "Морской"
+                ],
+                correct: 1,
+                explanation: "Тип климата с жарким сухим летом и прохладной дождливой зимой называют средиземноморским. Он характерен для западных побережий материков в субтропическом поясе."
+            },
+            {
+                question: "Как горы влияют на климат?",
+                options: [
+                    "Увеличивают температуру воздуха",
+                    "Создают преграду на пути воздушных масс",
+                    "Уменьшают количество осадков",
+                    "Выравнивают климатические условия"
+                ],
+                correct: 1,
+                explanation: "Горы могут создавать преграду на пути воздушных масс, в то время как равнинный рельеф облегчает их вторжение. Например, Гималаи задерживают влажный муссон, вызывая обильные осадки на своих южных склонах."
+            },
+            {
+                question: "Какой климат характерен для внутренних районов Евразии?",
+                options: [
+                    "Морской",
+                    "Резко континентальный",
+                    "Субтропический",
+                    "Экваториальный"
+                ],
+                correct: 1,
+                explanation: "Во внутренних районах Евразии климат резко континентальный, с большими колебаниями температур (разница температур июля и января может достигать 60-70°C) и малым количеством осадков."
+            },
+            {
+                question: "В каком климатическом поясе летом господствуют тропические воздушные массы, а зимой - умеренные?",
+                options: [
+                    "Субэкваториальном",
+                    "Субтропическом",
+                    "Субарктическом",
+                    "Тропическом"
+                ],
+                correct: 1,
+                explanation: "В субтропическом поясе летом 'хозяйничает' тропический воздух (жарко и сухо), а зимой приходит воздух умеренных широт - температура понижается, идут дожди."
+            },
+            {
+                question: "Что такое климатическая диаграмма?",
+                options: [
+                    "Карта климатических поясов",
+                    "График годового хода температур и осадков",
+                    "Схема циркуляции атмосферы",
+                    "Диаграмма распределения давления"
+                ],
+                correct: 1,
+                explanation: "Климатическая диаграмма (климатограмма) - это график, на котором одновременно показаны годовой ход температур и количество осадков по месяцам в конкретном пункте."
+            },
+            {
+                question: "Какой фактор в наибольшей степени определяет наличие областей внутри климатических поясов?",
+                options: [
+                    "Географическая широта",
+                    "Удалённость от океана",
+                    "Высота над уровнем моря",
+                    "Растительный покров"
+                ],
+                correct: 1,
+                explanation: "Разные сочетания климатообразующих факторов определяют наличие областей внутри климатических поясов. Главный из них - удалённость (близость) от океана."
+            },
+            {
+                question: "В каком направлении протягиваются климатические пояса?",
+                options: [
+                    "В меридиональном",
+                    "В широтном",
+                    "В диагональном",
+                    "В произвольном"
+                ],
+                correct: 1,
+                explanation: "Климатические пояса протягиваются в широтном направлении в соответствии с зональностью климата, которая определяется в первую очередь географической широтой."
+            },
+            {
+                question: "Как теплые течения влияют на климат побережий?",
+                options: [
+                    "Делают климат холоднее и суше",
+                    "Делают климат теплее и влажнее",
+                    "Уменьшают количество осадков",
+                    "Увеличивают амплитуду температур"
+                ],
+                correct: 1,
+                explanation: "Если тёплые течения из низких широт приходят в высокие широты, климат побережий становится более тёплым и влажным."
+            },
+            {
+                question: "Сколько переходных климатических поясов на Земле?",
+                options: [
+                    "4",
+                    "6",
+                    "8",
+                    "10"
+                ],
+                correct: 1,
+                explanation: "На Земном шаре 7 основных и 6 переходных климатических поясов. В каждом полушарии есть по три переходных пояса: субэкваториальный, субтропический и субарктический."
+            },
+            {
+                question: "Какой климат характерен для восточного побережья Евразии в субтропическом поясе?",
+                options: [
+                    "Средиземноморский",
+                    "Муссонный",
+                    "Морской",
+                    "Резко континентальный"
+                ],
+                correct: 1,
+                explanation: "На восточном побережье Евразии в субтропическом поясе - муссонный климат с жарким влажным летом и холодной сухой зимой."
+            },
+            {
+                question: "Что происходит с температурой воздуха с увеличением высоты?",
+                options: [
+                    "Повышается",
+                    "Понижается",
+                    "Не изменяется",
+                    "Сначала повышается, потом понижается"
+                ],
+                correct: 1,
+                explanation: "С высотой температура воздуха понижается, климат становится холоднее. Это одна из причин высотной поясности в горах."
+            },
+            {
+                question: "В каком климатическом поясе находится город Касабланка?",
+                options: [
+                    "Тропическом",
+                    "Субтропическом",
+                    "Умеренном",
+                    "Экваториальном"
+                ],
+                correct: 1,
+                explanation: "Город Касабланка в Марокко находится в субтропическом климатическом поясе, для которого характерно жаркое сухое лето и прохладная дождливая зима."
+            },
+            {
+                question: "Как распределение воды и суши на поверхности Земли влияет на климат?",
+                options: [
+                    "Не влияет на климат",
+                    "Определяет строгую зональность климата",
+                    "Изменяет строгую зональность климата",
+                    "Увеличивает количество осадков повсеместно"
+                ],
+                correct: 2,
+                explanation: "Распределение воды и суши на поверхности Земли, а также рельеф материков изменяют строгую зональность климата, создавая области с разными типами климата внутри поясов."
+            },
+            {
+                question: "Какой климатический пояс характеризуется максимальным количеством осадков в течение года?",
+                options: [
+                    "Тропический",
+                    "Экваториальный",
+                    "Умеренный",
+                    "Субтропический"
+                ],
+                correct: 1,
+                explanation: "Экваториальный пояс характеризуется максимальным количеством осадков в течение года, так как здесь постоянно высокие температуры и высокая влажность воздуха."
+            },
+            {
+                question: "В каком климатическом поясе расположена большая часть территории России?",
+                options: [
+                    "Субтропическом",
+                    "Умеренном",
+                    "Субарктическом",
+                    "Арктическом"
+                ],
+                correct: 1,
+                explanation: "Большая часть территории России расположена в умеренном климатическом поясе, который характеризуется четкой сезонностью и умеренным количеством осадков."
+            },
+            {
+                question: "Какой климатический пояс характеризуется минимальным количеством осадков?",
+                options: [
+                    "Экваториальный",
+                    "Тропический",
+                    "Умеренный",
+                    "Арктический"
+                ],
+                correct: 1,
+                explanation: "Тропический пояс характеризуется минимальным количеством осадков, особенно в его континентальных областях, где формируются пустыни."
+            },
+            {
+                question: "Какой из перечисленных факторов НЕ относится к климатообразующим?",
+                options: [
+                    "Географическая широта",
+                    "Рельеф местности",
+                    "Океанические течения",
+                    "Плотность населения"
+                ],
+                correct: 3,
+                explanation: "Плотность населения не относится к климатообразующим факторам. Основные климатообразующие факторы: географическая широта, циркуляция воздушных масс, океанические течения, удаленность от океана и рельеф."
+            },
+            {
+                question: "Выделите все основные климатические пояса:",
+                options: [
+                    "Экваториальный",
+                    "Тропический",
+                    "Умеренный",
+                    "Арктический/Антарктический",
+                    "Субтропический",
+                    "Субэкваториальный",
+                    "Субарктический"
+                ],
+                correct: [0, 1, 2, 3],
+                multiSelect: true,
+                explanation: "Основные климатические пояса: экваториальный, тропический, умеренный и арктический/антарктический. Субтропический, субэкваториальный и субарктический - переходные пояса."
+            }
+        ];
+
+        // Элементы DOM
+        const introScreen = document.getElementById('introScreen');
+        const quizScreen = document.getElementById('quizScreen');
+        const resultScreen = document.getElementById('resultScreen');
+        const startBtn = document.getElementById('startBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const resultText = document.getElementById('resultText');
+        const ratingOptions = document.getElementById('ratingOptions');
+        const emojiDisplay = document.getElementById('emojiDisplay');
+        const shapesContainer = document.getElementById('shapesContainer');
+
+        // Переменные состояния
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = [];
+        let selectedRating = 0;
+
+        // Создание геометрических фигур для фона
+        function createShapes() {
+            const shapes = ['circle', 'triangle', 'square'];
+            for (let i = 0; i < 15; i++) {
+                const shape = document.createElement('div');
+                const shapeType = shapes[Math.floor(Math.random() * shapes.length)];
+                shape.classList.add('shape', shapeType);
+                
+                shape.style.left = `${Math.random() * 100}%`;
+                shape.style.top = `${Math.random() * 100}%`;
+                
+                const size = 30 + Math.random() * 70;
+                if (shapeType === 'circle') {
+                    shape.style.width = `${size}px`;
+                    shape.style.height = `${size}px`;
+                } else if (shapeType === 'triangle') {
+                    const borderSize = size / 2;
+                    shape.style.borderLeft = `${borderSize}px solid transparent`;
+                    shape.style.borderRight = `${borderSize}px solid transparent`;
+                    shape.style.borderBottom = `${size}px solid #00c6ff`;
+                } else if (shapeType === 'square') {
+                    shape.style.width = `${size}px`;
+                    shape.style.height = `${size}px`;
+                }
+                
+                shape.style.animationDelay = `${Math.random() * 20}s`;
+                
+                shapesContainer.appendChild(shape);
+            }
+        }
+
+        // Инициализация викторины
+        function initQuiz() {
+            createShapes();
+            
+            startBtn.addEventListener('click', startQuiz);
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', restartQuiz);
+            
+            const ratingElements = ratingOptions.querySelectorAll('.rating-option');
+            ratingElements.forEach(el => {
+                el.addEventListener('click', () => {
+                    ratingElements.forEach(e => e.classList.remove('selected'));
+                    el.classList.add('selected');
+                    selectedRating = parseInt(el.getAttribute('data-rating'));
+                    updateEmoji(selectedRating);
+                });
+            });
+        }
+
+        // Начало викторины
+        function startQuiz() {
+            introScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            showQuestion();
+        }
+
+        // Показать текущий вопрос
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            questionText.textContent = question.question;
+            
+            const progress = ((currentQuestion) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `Вопрос ${currentQuestion + 1} из ${questions.length}`;
+            
+            optionsContainer.innerHTML = '';
+            
+            if (question.multiSelect) {
+                const multiSelectContainer = document.createElement('div');
+                multiSelectContainer.classList.add('multi-select-container');
+                
+                question.options.forEach((option, index) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.classList.add('multi-select-option');
+                    
+                    const checkbox = document.createElement('div');
+                    checkbox.classList.add('multi-select-checkbox');
+                    
+                    const optionText = document.createElement('span');
+                    optionText.textContent = option;
+                    
+                    optionElement.appendChild(checkbox);
+                    optionElement.appendChild(optionText);
+                    
+                    optionElement.addEventListener('click', () => {
+                        optionElement.classList.toggle('selected');
+                        
+                        if (!userAnswers[currentQuestion]) {
+                            userAnswers[currentQuestion] = [];
+                        }
+                        
+                        const answerIndex = userAnswers[currentQuestion].indexOf(index);
+                        if (answerIndex === -1) {
+                            userAnswers[currentQuestion].push(index);
+                        } else {
+                            userAnswers[currentQuestion].splice(answerIndex, 1);
+                        }
+                        
+                        nextBtn.disabled = userAnswers[currentQuestion].length === 0;
+                    });
+                    
+                    multiSelectContainer.appendChild(optionElement);
+                });
+                
+                optionsContainer.appendChild(multiSelectContainer);
+            } else {
+                question.options.forEach((option, index) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.classList.add('option');
+                    optionElement.textContent = option;
+                    optionElement.addEventListener('click', () => selectOption(index));
+                    optionsContainer.appendChild(optionElement);
+                });
+            }
+            
+            nextBtn.disabled = true;
+        }
+
+        // Выбор варианта ответа
+        function selectOption(optionIndex) {
+            const options = optionsContainer.querySelectorAll('.option');
+            
+            options.forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            options[optionIndex].classList.add('selected');
+            
+            userAnswers[currentQuestion] = optionIndex;
+            
+            nextBtn.disabled = false;
+        }
+
+        // Переход к следующему вопросу
+        function nextQuestion() {
+            const question = questions[currentQuestion];
+            const correctAnswer = question.correct;
+            const userAnswer = userAnswers[currentQuestion];
+            
+            if (question.multiSelect) {
+                const options = optionsContainer.querySelectorAll('.multi-select-option');
+                
+                const correctCount = Array.isArray(correctAnswer) ? correctAnswer.length : 1;
+                const userCorrect = userAnswer.filter(ans => correctAnswer.includes(ans)).length;
+                
+                options.forEach((option, index) => {
+                    if (correctAnswer.includes(index)) {
+                        option.classList.add('correct');
+                    } else if (userAnswer.includes(index)) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                const multiSelectResult = document.createElement('div');
+                multiSelectResult.classList.add('multi-select-result');
+                multiSelectResult.innerHTML = `<strong>Результат:</strong> Вы правильно выбрали ${userCorrect} из ${correctCount} вариантов.`;
+                optionsContainer.parentNode.appendChild(multiSelectResult);
+                
+                if (userCorrect === correctCount && userAnswer.length === correctCount) {
+                    score++;
+                }
+            } else {
+                const options = optionsContainer.querySelectorAll('.option');
+                
+                options[correctAnswer].classList.add('correct');
+                if (userAnswer !== correctAnswer) {
+                    options[userAnswer].classList.add('incorrect');
+                } else {
+                    score++;
+                }
+            }
+            
+            const explanation = document.createElement('div');
+            explanation.classList.add('correct-answer');
+            if (question.multiSelect) {
+                const correctOptions = Array.isArray(correctAnswer) ? 
+                    correctAnswer.map(idx => question.options[idx]).join(', ') : 
+                    question.options[correctAnswer];
+                explanation.innerHTML = `<strong>Правильные ответы:</strong> ${correctOptions}<br>
+                                        <div class="feedback">${question.explanation}</div>`;
+            } else {
+                explanation.innerHTML = `<strong>Правильный ответ:</strong> ${question.options[correctAnswer]}<br>
+                                        <div class="feedback">${question.explanation}</div>`;
+            }
+            optionsContainer.parentNode.appendChild(explanation);
+            
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Завершить викторину' : 'Следующий вопрос';
+            nextBtn.onclick = currentQuestion === questions.length - 1 ? finishQuiz : nextQuestionStep;
+        }
+
+        // Шаг перехода к следующему вопросу
+        function nextQuestionStep() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        // Завершение викторины
+        function finishQuiz() {
+            quizScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            scoreDisplay.textContent = `${score}/${questions.length}`;
+            
+            let resultMessage = '';
+            if (percentage >= 90) {
+                resultMessage = 'Отлично! Вы настоящий эксперт в климатических поясах Земли!';
+            } else if (percentage >= 70) {
+                resultMessage = 'Хорошо! У вас солидные знания о климатических поясах.';
+            } else if (percentage >= 50) {
+                resultMessage = 'Неплохо! Вы знаете основы, но есть куда расти.';
+            } else {
+                resultMessage = 'Есть над чем поработать! Рекомендуем изучить материал еще раз.';
+            }
+            
+            resultText.textContent = resultMessage;
+        }
+
+        // Обновление смайлика в зависимости от рейтинга
+        function updateEmoji(rating) {
+            const emojis = ['😢', '😞', '😐', '🙂', '😊', '😄', '🤩', '🥳', '🎉', '🏆'];
+            emojiDisplay.textContent = emojis[rating - 1];
+        }
+
+        // Перезапуск викторины
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            selectedRating = 0;
+            
+            const ratingElements = ratingOptions.querySelectorAll('.rating-option');
+            ratingElements.forEach(el => el.classList.remove('selected'));
+            emojiDisplay.textContent = '😊';
+            
+            resultScreen.classList.add('hidden');
+            introScreen.classList.remove('hidden');
+        }
+
+        // Запуск при загрузке страницы
+        window.addEventListener('DOMContentLoaded', initQuiz);
+    </script>
+</body>
+</html>
