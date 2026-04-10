@@ -2,1025 +2,344 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>География - лучший предмет | Викторина по климатическим поясам</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Справочник | Каждая статья отдельно | УК УПК ФЗ Устав</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: white;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .authors {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-            opacity: 0.9;
-            background: rgba(255,255,255,0.15);
-            padding: 15px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            border: 2px solid rgba(255,255,255,0.2);
-            animation: glow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-            to { box-shadow: 0 5px 20px rgba(255,255,255,0.3); }
-        }
-
-        header {
-            text-align: center;
-            padding: 30px 0;
-            position: relative;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(0,0,0,0.3);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            opacity: 0.9;
-        }
-
-        .teacher-tribute {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            background: rgba(255,255,255,0.2);
-            padding: 10px 20px;
-            border-radius: 10px;
-            display: inline-block;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .geometry-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255,255,255,0.2);
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transform: rotate(5deg);
-        }
-
-        .intro-screen, .quiz-screen, .result-screen {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            margin: 20px 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: all 0.5s ease;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .hidden {
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-        }
-
-        .question-container {
-            margin-bottom: 30px;
-        }
-
-        .question-number {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: #ffcc00;
-        }
-
-        .question-text {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        .options-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-
-        @media (min-width: 768px) {
-            .options-container {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .option {
-            background: rgba(255,255,255,0.15);
-            padding: 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .option:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .option.selected {
-            background: rgba(50, 150, 255, 0.4);
-            border-color: #3296ff;
-            transform: scale(1.02);
-        }
-
-        .option.correct {
-            background: rgba(50, 200, 100, 0.4);
-            border-color: #32c864;
-        }
-
-        .option.incorrect {
-            background: rgba(255, 80, 80, 0.4);
-            border-color: #ff5050;
-        }
-
-        .btn {
-            background: linear-gradient(45deg, #ff8a00, #e52e71);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            display: block;
-            margin: 20px auto;
-            min-width: 200px;
-        }
-
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn:disabled {
-            background: rgba(255,255,255,0.2);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .progress-container {
-            margin: 30px 0;
-        }
-
-        .progress-bar {
-            height: 10px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, #00c6ff, #0072ff);
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 5px;
-        }
-
-        .result-screen {
-            text-align: center;
-        }
-
-        .score-display {
-            font-size: 4rem;
-            margin: 20px 0;
-            color: #ffcc00;
-            text-shadow: 0 0 10px rgba(255,204,0,0.5);
-        }
-
-        .rating-container {
-            margin: 30px 0;
-        }
-
-        .rating-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-
-        .rating-options {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .rating-option {
-            background: rgba(255,255,255,0.1);
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .rating-option:hover {
-            transform: scale(1.1);
-            background: rgba(255,255,255,0.2);
-        }
-
-        .rating-option.selected {
-            background: rgba(50, 150, 255, 0.4);
-            border-color: #3296ff;
-            transform: scale(1.2);
-        }
-
-        .emoji-display {
-            font-size: 5rem;
-            margin: 20px 0;
-            animation: bounce 1s infinite alternate;
-        }
-
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-20px); }
-        }
-
-        .shapes-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .shape {
-            position: absolute;
-            opacity: 0.1;
-            animation: float 20s infinite linear;
-        }
-
-        .circle {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #ff8a00, #e52e71);
-        }
-
-        .triangle {
-            width: 0;
-            height: 0;
-            border-left: 50px solid transparent;
-            border-right: 50px solid transparent;
-            border-bottom: 100px solid #00c6ff;
-        }
-
-        .square {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, #00c6ff, #0072ff);
-            transform: rotate(45deg);
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(-1000px) rotate(720deg); }
-        }
-
-        .correct-answer {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(50, 200, 100, 0.2);
-            border-radius: 10px;
-            border-left: 5px solid #32c864;
-        }
-
-        .feedback {
-            margin-top: 20px;
-            font-style: italic;
-            opacity: 0.8;
-        }
-
-        .multi-select-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .multi-select-option {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .multi-select-option:hover {
-            background: rgba(255,255,255,0.25);
-        }
-
-        .multi-select-option.selected {
-            background: rgba(50, 150, 255, 0.4);
-        }
-
-        .multi-select-option.correct {
-            background: rgba(50, 200, 100, 0.4);
-        }
-
-        .multi-select-option.incorrect {
-            background: rgba(255, 80, 80, 0.4);
-        }
-
-        .multi-select-checkbox {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            border: 2px solid rgba(255,255,255,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .multi-select-option.selected .multi-select-checkbox::after {
-            content: "✓";
-            color: white;
-            font-weight: bold;
-        }
-
-        .multi-select-result {
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 8px;
-            background: rgba(255,255,255,0.1);
-        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{background:#0a0c14;font-family:'Segoe UI',Roboto,monospace;line-height:1.45;color:#eef2ff;padding:16px 12px 40px;}
+        .container{max-width:1000px;margin:0 auto;}
+        .hero{background:#01050ccc;backdrop-filter:blur(8px);border-radius:2rem;padding:1.5rem;margin-bottom:2rem;border:2px solid #2affb6;box-shadow:0 0 18px #2affb670;}
+        .hero h1{font-size:1.9rem;color:#2affb6;word-break:break-word;}
+        .author{color:#ffcc77;margin-top:12px;font-weight:bold;}
+        .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;}
+        .tab-btn{background:#1a1f2e;border:none;padding:10px 16px;font-weight:bold;border-radius:40px;color:#ddd;cursor:pointer;flex:1;text-align:center;font-size:0.85rem;}
+        .tab-btn.active{background:#2affb6;color:#000;box-shadow:0 0 8px #2affb6;}
+        .tab-pane{display:none;background:#0f1222cc;backdrop-filter:blur(12px);border-radius:2rem;padding:1.5rem;border:1px solid #2affb6;}
+        .active-pane{display:block;}
+        .article-card{background:#00000066;border-radius:1.2rem;padding:1rem;margin-bottom:1rem;border-left:4px solid #2affb6;}
+        .art-header{font-weight:800;font-size:1rem;margin-bottom:6px;color:#b3f0ff;}
+        .art-sentence{font-size:0.88rem;white-space:pre-wrap;word-break:break-word;color:#e2ecff;}
+        .procedure-block{background:#021007;border-radius:1.5rem;padding:1.3rem;margin:1.5rem 0;border:2px solid #2affb6;}
+        .step{display:flex;gap:12px;margin:12px 0;}
+        .step-num{background:#2affb6;color:#000;width:32px;height:32px;border-radius:40px;display:inline-flex;align-items:center;justify-content:center;font-weight:bold;}
+        .footer-note{font-size:0.7rem;text-align:center;color:#9bb5d0;margin-top:2rem;}
+        @media (max-width:600px){.hero h1{font-size:1.4rem;}.tab-btn{padding:6px 8px;font-size:0.7rem;}}
+        .scroll-top{position:fixed;bottom:20px;right:20px;background:#2affb6;color:#000;border:none;width:48px;height:48px;border-radius:50%;font-size:26px;cursor:pointer;}
     </style>
 </head>
 <body>
-    <div class="shapes-container" id="shapesContainer"></div>
-    
-    <div class="container">
-        <div class="authors">Разработано и написано Алексеем Шатырко и Евгением Базавовым</div>
-        
-        <header>
-            <h1>Климатические пояса Земли</h1>
-            <div class="subtitle">Проверьте свои знания географии!</div>
-            <div class="geometry-badge">География - лучший предмет!</div>
-            <div class="teacher-tribute">Лучший учитель - Вера Алексеевна!</div>
-        </header>
-        
-        <div class="intro-screen" id="introScreen">
-            <h2>Добро пожаловать в викторину!</h2>
-            <p>Эта викторина проверит ваши знания о климатических поясах Земли, их особенностях и факторах формирования.</p>
-            <p>Вам предстоит ответить на 25 вопросов, после которых вы получите оценку своих знаний.</p>
-            <p>Удачи!</p>
-            <button class="btn" id="startBtn">Начать викторину</button>
+<div class="container">
+    <div class="hero">
+        <h2>⚡ создал: Алексей Беллов ⚡</h2>
+        <p>УК РФ · УПК РФ · ФЗ «О полиции» · Устав МВД · Каждая статья — в своём блоке. Никаких объединений.</p>
+        <div class="author">Алексей Беллов | Полный перечень без сокращений</div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="uk">УК РФ (ст.1-123)</button>
+        <button class="tab-btn" data-tab="upk">УПК РФ (ст.1-131)</button>
+        <button class="tab-btn" data-tab="police">ФЗ «О полиции»</button>
+        <button class="tab-btn" data-tab="ustav">Устав МВД</button>
+        <button class="tab-btn" data-tab="memory">ПАМЯТКИ+ПРОЦЕДУРЫ</button>
+    </div>
+
+    <!-- =============== УК РФ: каждая статья отдельно (Общая + Особенная) =============== -->
+    <div id="uk" class="tab-pane active-pane">
+        <!-- Общая часть 1-42 -->
+        <div class="article-card"><div class="art-header">Статья 1 — Уголовное законодательство Российской Федерации</div><div class="art-sentence">Уголовное законодательство РФ состоит из настоящего Кодекса. Новые законы подлежат включению в него.</div></div>
+        <div class="article-card"><div class="art-header">Статья 2 — Задачи Уголовного кодекса</div><div class="art-sentence">Охрана прав и свобод человека, собственности, общественного порядка, безопасности, окружающей среды, предупреждение преступлений.</div></div>
+        <div class="article-card"><div class="art-header">Статья 3 — Принцип законности</div><div class="art-sentence">Преступность деяния определяется только УК РФ. Применение закона по аналогии не допускается.</div></div>
+        <div class="article-card"><div class="art-header">Статья 4 — Принцип равенства перед законом</div><div class="art-sentence">Лица, совершившие преступления, равны независимо от пола, расы, национальности, должности, вероисповедания и др.</div></div>
+        <div class="article-card"><div class="art-header">Статья 5 — Принцип вины</div><div class="art-sentence">Лицо подлежит ответственности только за те действия, в отношении которых установлена его вина. Объективное вменение запрещено.</div></div>
+        <div class="article-card"><div class="art-header">Статья 6 — Принцип справедливости</div><div class="art-sentence">Наказание должно соответствовать характеру и степени общественной опасности преступления. Никто не может нести ответственность дважды за одно преступление.</div></div>
+        <div class="article-card"><div class="art-header">Статья 7 — Принцип гуманизма</div><div class="art-sentence">Наказание не может иметь целью причинение физических страданий или унижение человеческого достоинства.</div></div>
+        <div class="article-card"><div class="art-header">Статья 8 — Основание уголовной ответственности</div><div class="art-sentence">Совершение деяния, содержащего все признаки состава преступления, предусмотренного УК РФ.</div></div>
+        <div class="article-card"><div class="art-header">Статья 9 — Действие уголовного закона во времени</div><div class="art-sentence">Преступность и наказуемость определяются законом, действовавшим во время совершения преступления.</div></div>
+        <div class="article-card"><div class="art-header">Статья 10 — Действие уголовного закона в пространстве</div><div class="art-sentence">Лица, совершившие преступление на территории РФ, подлежат ответственности по УК РФ.</div></div>
+        <div class="article-card"><div class="art-header">Статья 11 — Обратная сила уголовного закона</div><div class="art-sentence">Закон, устраняющий преступность деяния, смягчающий наказание, имеет обратную силу.</div></div>
+        <div class="article-card"><div class="art-header">Статья 12 — Категории преступлений</div><div class="art-sentence">Небольшой тяжести (до 3 лет л/с), средней тяжести (до 6 лет), тяжкие (до 10 лет), особо тяжкие (свыше 10 лет).</div></div>
+        <div class="article-card"><div class="art-header">Статья 13 — Умышленная форма вины</div><div class="art-sentence">Лицо осознавало общественную опасность и желало либо сознательно допускало наступление последствий.</div></div>
+        <div class="article-card"><div class="art-header">Статья 14 — Неосторожная форма вины</div><div class="art-sentence">Лицо не предвидело, но должно было и могло предвидеть наступление последствий (легкомыслие или небрежность).</div></div>
+        <div class="article-card"><div class="art-header">Статья 15 — Совершение преступления группой лиц</div><div class="art-sentence">Два или более лица. Является отягчающим обстоятельством, если иное не предусмотрено.</div></div>
+        <div class="article-card"><div class="art-header">Статья 16 — Соучастие в преступлении</div><div class="art-sentence">Умышленное совместное участие двух или более лиц. Соучастники: исполнитель, организатор, подстрекатель, пособник.</div></div>
+        <div class="article-card"><div class="art-header">Статья 17 — Оконченное и неоконченное преступление</div><div class="art-sentence">Оконченное — содержит все признаки состава. Неоконченное — приготовление и покушение.</div></div>
+        <div class="article-card"><div class="art-header">Статья 18 — Приготовление к преступлению</div><div class="art-sentence">Приискание, изготовление средств, приспособление. Ответственность только за тяжкие и особо тяжкие.</div></div>
+        <div class="article-card"><div class="art-header">Статья 19 — Покушение на преступление</div><div class="art-sentence">Умышленные действия, непосредственно направленные на совершение преступления, если оно не было доведено до конца.</div></div>
+        <div class="article-card"><div class="art-header">Статья 20 — Добровольный отказ от преступления</div><div class="art-sentence">Лицо не подлежит ответственности, если добровольно и окончательно отказалось от доведения преступления до конца.</div></div>
+        <div class="article-card"><div class="art-header">Статья 21 — Совокупность преступлений</div><div class="art-sentence">Совершение двух или более преступлений, ни за одно из которых лицо не было осуждено. Ответственность за каждое.</div></div>
+        <div class="article-card"><div class="art-header">Статья 22 — Рецидив преступлений</div><div class="art-sentence">Совершение умышленного преступления при наличии судимости за ранее совершенное умышленное преступление. Влечёт более строгое наказание.</div></div>
+        <div class="article-card"><div class="art-header">Статья 23 — Необходимая оборона</div><div class="art-sentence">Не является преступлением причинение вреда посягающему при защите от нападения, сопряжённого с насилием, опасным для жизни.</div></div>
+        <div class="article-card"><div class="art-header">Статья 24 — Причинение вреда при задержании лица, совершившего преступление</div><div class="art-sentence">Не является преступлением, если иными средствами задержать не представлялось возможным и не было допущено превышения мер.</div></div>
+        <div class="article-card"><div class="art-header">Статья 25 — Крайняя необходимость</div><div class="art-sentence">Не является преступлением причинение вреда для устранения опасности, если она не могла быть устранена иначе.</div></div>
+        <div class="article-card"><div class="art-header">Статья 26 — Физическое или психическое принуждение</div><div class="art-sentence">Не является преступлением, если вследствие принуждения лицо не могло руководить своими действиями.</div></div>
+        <div class="article-card"><div class="art-header">Статья 27 — Исполнение приказа или распоряжения</div><div class="art-sentence">Не является преступлением причинение вреда во исполнение обязательного приказа. Ответственность несёт отдавший незаконный приказ.</div></div>
+        <div class="article-card"><div class="art-header">Статья 28 — Понятие и цели наказания</div><div class="art-sentence">Мера государственного принуждения по приговору суда. Цели: восстановление справедливости, исправление осуждённого, предупреждение новых преступлений.</div></div>
+        <div class="article-card"><div class="art-header">Статья 29 — Виды наказаний</div><div class="art-sentence">Штраф, лишение права занимать должности, лишение звания, ограничение свободы, арест, лишение свободы на определённый срок.</div></div>
+        <div class="article-card"><div class="art-header">Статья 30 — Основные и дополнительные виды наказаний</div><div class="art-sentence">Арест, лишение свободы — только основные. Штраф, лишение права — основные и дополнительные. Лишение звания — только дополнительное.</div></div>
+        <div class="article-card"><div class="art-header">Статья 31 — Общие начала назначения наказания</div><div class="art-sentence">Назначается справедливое наказание в пределах санкции статьи с учётом личности, смягчающих и отягчающих обстоятельств.</div></div>
+        <div class="article-card"><div class="art-header">Статья 32 — Обстоятельства, смягчающие наказание</div><div class="art-sentence">Совершение впервые, явка с повинной, активное способствование раскрытию преступления, оказание помощи потерпевшему, противоправность поведения потерпевшего и др.</div></div>
+        <div class="article-card"><div class="art-header">Статья 33 — Назначение наказания при наличии смягчающих обстоятельств</div><div class="art-sentence">При наличии явки с повинной и добровольного возмещения вреда срок наказания не может превышать 2/3 максимального.</div></div>
+        <div class="article-card"><div class="art-header">Статья 34 — Обстоятельства, отягчающие наказание</div><div class="art-sentence">Рецидив, тяжкие последствия, совершение в составе группы, в условиях чрезвычайного положения, в состоянии опьянения.</div></div>
+        <div class="article-card"><div class="art-header">Статья 35 — Назначение наказания по совокупности преступлений</div><div class="art-sentence">Наказание назначается отдельно за каждое преступление, затем частичное или полное сложение. Окончательное наказание не может превышать более чем наполовину максимум за наиболее тяжкое.</div></div>
+        <div class="article-card"><div class="art-header">Статья 36 — Назначение наказания по совокупности приговоров</div><div class="art-sentence">К наказанию по последнему приговору присоединяется неотбытая часть по предыдущему. Окончательное лишение свободы — не более 24 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 37 — Освобождение от уголовной ответственности в связи с истечением сроков давности</div><div class="art-sentence">3 дня (небольшой тяжести), 10 дней (средней), 15 дней (тяжкие), 21 день (особо тяжкие).</div></div>
+        <div class="article-card"><div class="art-header">Статья 38 — Освобождение или сокращение срока отбывания наказания под залог</div><div class="art-sentence">Залог: 10-25 тыс. (небольшой тяжести), 26-50 тыс. (средней), 51-75 тыс. (тяжкие), 76-100 тыс. (особо тяжкие).</div></div>
+        <div class="article-card"><div class="art-header">Статья 39 — Помилование</div><div class="art-sentence">Осуществляется Премьер-министром РФ. Может освободить от наказания или сократить его.</div></div>
+        <div class="article-card"><div class="art-header">Статья 40 — Судимость</div><div class="art-sentence">Погашается по истечении 14 календарных дней. Аннулирует все правовые последствия.</div></div>
+        <div class="article-card"><div class="art-header">Статья 41 — Судебный штраф</div><div class="art-text">Денежное взыскание при освобождении от ответственности. Не более половины максимального штрафа по статье или не более 100 000 руб.</div></div>
+        <div class="article-card"><div class="art-header">Статья 42 — Порядок определения размера судебного штрафа</div><div class="art-sentence">Определяется с учётом тяжести преступления и имущественного положения лица.</div></div>
+
+        <!-- Особенная часть: каждая статья отдельно -->
+        <div class="article-card"><div class="art-header">Статья 43 (С) — Убийство</div><div class="art-sentence">Санкция: лишение свободы на срок от 13 до 18 лет. Квалифицированное (двух лиц, особая жестокость, группа, корысть, экстремизм) — от 19 до 24 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 44 (С) — Причинение смерти по неосторожности</div><div class="art-sentence">Санкция: лишение свободы на срок от 9 до 12 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 45 (С) — Умышленное причинение тяжкого вреда здоровью</div><div class="art-sentence">Санкция: лишение свободы на срок от 6 до 9 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 46 — Умышленное причинение средней тяжести вреда здоровью</div><div class="art-sentence">Санкция: лишение свободы на срок от 4 до 7 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 47 — Умышленное причинение легкого вреда здоровью с оружием</div><div class="art-sentence">Санкция: штраф 10 000 – 20 000 руб. либо лишение свободы от 2 до 5 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 48 — Побои из хулиганских побуждений</div><div class="art-sentence">Санкция: штраф 5 000 – 15 000 руб. либо лишение свободы от 1 до 3 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 49 — Угроза убийством или причинением тяжкого вреда здоровью</div><div class="art-sentence">Санкция: лишение свободы от 1 до 3 лет. По экстремистским мотивам или в отношении представителя власти — от 2 до 5 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 50 — Неоказание помощи больному</div><div class="art-sentence">Санкция: штраф 10 000 – 15 000 руб. либо лишение свободы от 2 до 3 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 51 — Воспрепятствование оказанию медицинской помощи</div><div class="art-sentence">Санкция: штраф 5 000 – 15 000 руб. либо лишение свободы от 3 до 5 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 52 (С) — Похищение человека</div><div class="art-sentence">Санкция: от 6 до 10 лет. С отягчающими (группа, насилие, оружие) — от 8 до 12 лет. Повлекшее смерть — от 13 до 24 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 53 (С) — Незаконное лишение свободы</div><div class="art-sentence">Санкция: от 4 до 8 лет. При отягчающих — от 8 до 10 лет. Повлекшее смерть — от 13 до 24 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 54 (С) — Изнасилование</div><div class="art-sentence">Санкция: лишение свободы на срок от 13 до 20 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 55 — Кража</div><div class="art-sentence">Санкция: штраф 5 000 – 12 000 руб. либо лишение свободы от 1 до 3 лет. Квалифицированная (группа, проникновение) — от 2 до 5 лет + штраф 10 000 – 20 000 руб.</div></div>
+        <div class="article-card"><div class="art-header">Статья 56 — Грабеж</div><div class="art-sentence">Санкция: лишение свободы от 2 до 4 лет. С отягчающими — от 4 до 6 лет + штраф 20 000 – 40 000 руб.</div></div>
+        <div class="article-card"><div class="art-header">Статья 57 (С) — Разбой</div><div class="art-sentence">Санкция: лишение свободы от 3 до 7 лет + штраф 15 000 – 25 000 руб. С оружием, группой — от 5 до 9 лет + штраф 20 000 – 40 000 руб.</div></div>
+        <div class="article-card"><div class="art-header">Статья 58 — Неправомерное завладение автомобилем (угон)</div><div class="art-sentence">Санкция: штраф 5 000 – 15 000 руб. либо лишение свободы от 1 до 3 лет. С насилием или группой — от 2 до 5 лет. С опасным насилием — от 3 до 6 лет + штраф.</div></div>
+        <div class="article-card"><div class="art-header">Статья 59 — Уничтожение или повреждение имущества</div><div class="art-sentence">Санкция: штраф 5 000 – 20 000 руб. либо лишение свободы от 1 до 3 лет. Из хулиганских побуждений — от 2 до 5 лет + штраф.</div></div>
+        <div class="article-card"><div class="art-header">Статья 60 — Незаконное предпринимательство</div><div class="art-sentence">Санкция: штраф 20 000 – 60 000 руб. либо лишение свободы от 1 до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 61 — Превышение полномочий частным адвокатом или охранником</div><div class="art-sentence">Санкция: штраф 10 000 – 35 000 руб. либо лишение свободы от 2 до 5 лет. С насилием — от 4 до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 62 (С) — Террористический акт</div><div class="art-sentence">Санкция: лишение свободы от 13 до 24 лет. Группой — от 18 до 24 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 63 (С) — Организация террористического сообщества</div><div class="art-sentence">Санкция: создание — от 13 до 24 лет, участие — от 13 до 16 лет, склонение — от 13 до 18 лет + штраф.</div></div>
+        <div class="article-card"><div class="art-header">Статья 64 (С) — Публичные призывы к терроризму, оправдание терроризма</div><div class="art-sentence">Санкция: лишение свободы от 6 до 12 лет + штраф 30 000 – 50 000 руб.</div></div>
+        <div class="article-card"><div class="art-header">Статья 65 (С) — Захват заложника</div><div class="art-sentence">Санкция: от 8 до 12 лет. С отягчающими (группа, насилие, оружие) — от 10 до 24 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 66 — Заведомо ложное сообщение об акте терроризма</div><div class="art-sentence">Санкция: штраф 20 000 – 50 000 руб. либо лишение свободы от 1 до 3 лет. С целью дестабилизации — от 2 до 6 лет + штраф.</div></div>
+        <div class="article-card"><div class="art-header">Статья 67 (С) — Бандитизм</div><div class="art-sentence">Санкция: создание банды — от 13 до 18 лет + штраф; участие — от 5 до 8 лет + штраф.</div></div>
+        <div class="article-card"><div class="art-header">Статья 68 (С) — Организация преступного сообщества</div><div class="art-sentence">Санкция: создание — от 13 до 24 лет + штраф; участие — от 4 до 7 лет + штраф.</div></div>
+        <div class="article-card"><div class="art-header">Статья 69 (С) — Занятие высшего положения в преступной иерархии</div><div class="art-sentence">Санкция: лишение свободы от 16 до 24 лет + штраф 50 000 – 100 000 руб.</div></div>
+        <div class="article-card"><div class="art-header">Статья 70 (С) — Массовые беспорядки</div><div class="art-sentence">Санкция: организация — от 13 до 20 лет + штраф; участие — от 3 до 8 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 71 — Хулиганство</div><div class="art-sentence">Санкция: штраф 5 000 – 15 000 руб. либо лишение свободы от 2 до 3 лет. С оружием или группой — от 2 до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 72 — Незаконное проникновение на закрытый объект</div><div class="art-sentence">Санкция: штраф 5 000 – 15 000 руб. либо лишение свободы от 2 до 4 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 73 — Незаконный оборот оружия</div><div class="art-sentence">Санкция: приобретение, хранение — от 2 до 4 лет; сбыт — от 3 до 5 лет + штраф; группой — до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 74 (С) — Пиратство</div><div class="art-sentence">Санкция: лишение свободы от 7 до 15 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 75 — Воспрепятствование избирательным правам</div><div class="art-sentence">Санкция: штраф 15 000 – 20 000 руб. либо лишение свободы от 1 до 3 лет. С подкупом, насилием — от 3 до 5 лет + штраф.</div></div>
+        <div class="article-card"><div class="art-header">Статья 76 — Нарушение неприкосновенности жилища</div><div class="art-sentence">Санкция: штраф 10 000 – 25 000 руб. либо лишение свободы от 2 до 3 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 77 — Воспрепятствование проведению собрания, митинга, демонстрации</div><div class="art-sentence">Санкция: штраф 10 000 – 30 000 руб.</div></div>
+        <div class="article-card"><div class="art-header">Статья 78 (С) — Государственная измена</div><div class="art-sentence">Санкция: лишение свободы от 18 до 24 лет + штраф до 100 000 руб.</div></div>
+        <div class="article-card"><div class="art-header">Статья 79 (С) — Посягательство на жизнь государственного или общественного деятеля</div><div class="art-sentence">Санкция: лишение свободы от 10 до 16 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 80 (С) — Вооруженный мятеж</div><div class="art-sentence">Санкция: организация — от 18 до 24 лет; участие — от 13 до 18 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 81 — Публичные призывы к экстремизму</div><div class="art-sentence">Санкция: штраф до 70 000 руб. либо лишение свободы от 2 до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 82 (С) — Диверсия</div><div class="art-sentence">Санкция: от 10 до 16 лет; группой — от 13 до 18 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 83 — Возбуждение ненависти либо вражды</div><div class="art-sentence">Санкция: штраф до 30 000 руб. либо лишение свободы от 3 до 5 лет. С насилием или группой — от 4 до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 84 (С) — Организация экстремистского сообщества</div><div class="art-sentence">Санкция: создание — от 14 до 20 лет; участие — от 6 до 9 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 85 (С) — Разглашение государственной тайны</div><div class="art-sentence">Санкция: лишение свободы от 13 до 17 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 86 (С) — Незаконное получение сведений, составляющих государственную тайну</div><div class="art-sentence">Санкция: лишение свободы от 13 до 15 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 87 (С) — Злоупотребление должностными полномочиями</div><div class="art-sentence">Санкция: до 8 лет л/с; с тяжкими последствиями — до 13 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 88 (С) — Превышение должностных полномочий</div><div class="art-sentence">Санкция: до 10 лет. С насилием, оружием, пыткой — от 10 до 18 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 89 (С) — Присвоение полномочий должностного лица</div><div class="art-sentence">Санкция: штраф до 30 000 руб. либо лишение свободы до 10 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 90 (С) — Неисполнение должностным лицом приказа</div><div class="art-sentence">Санкция: до 9 лет; группой или с тяжкими последствиями — до 14 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 91 — Отказ в предоставлении информации Федеральному Собранию</div><div class="art-sentence">Санкция: лишение свободы до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 92 (С) — Получение взятки</div><div class="art-sentence">Санкция: штраф до 50 000 руб. либо до 8 лет; за незаконные действия — до 12 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 93 (С) — Дача взятки</div><div class="art-sentence">Санкция: штраф до 30 000 руб. либо до 7 лет; за заведомо незаконные действия — до 10 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 94 — Служебный подлог</div><div class="art-sentence">Санкция: штраф 20 000 – 35 000 руб. либо лишение свободы до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 95 — Халатность</div><div class="art-sentence">Санкция: штраф до 15 000 руб. либо лишение свободы от 1 до 5 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 96 (С) — Воспрепятствование осуществлению правосудия</div><div class="art-sentence">Санкция: штраф 10 000 – 30 000 руб. либо до 9 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 97 (С) — Посягательство на жизнь лица, осуществляющего правосудие</div><div class="art-sentence">Санкция: лишение свободы до 12 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 98 — Неуважение к суду</div><div class="art-sentence">Санкция: штраф 5 000 – 20 000 руб.; оскорбление судьи — штраф 15 000 – 30 000 руб. либо до 5 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 99 (С) — Привлечение заведомо невиновного к уголовной ответственности</div><div class="art-sentence">Санкция: от 8 до 10 лет; с обвинением в тяжком преступлении — от 13 до 15 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 100 (С) — Незаконное освобождение от уголовной ответственности</div><div class="art-sentence">Санкция: лишение свободы от 6 до 12 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 101 (С) — Незаконные задержание, заключение под стражу</div><div class="art-sentence">Санкция: задержание — от 4 до 8 лет; заключение под стражу — от 6 до 12 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 102 (С) — Вынесение заведомо неправосудного приговора</div><div class="art-sentence">Санкция: штраф 10 000 – 25 000 руб. либо лишение свободы от 5 до 13 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 103 — Заведомо ложный донос</div><div class="art-sentence">Санкция: штраф 5 000 – 15 000 руб. либо лишение свободы от 3 до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 104 — Заведомо ложные показания, заключение специалиста</div><div class="art-sentence">Санкция: штраф 20 000 – 35 000 руб. либо лишение свободы от 2 до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 105 — Разглашение данных предварительного расследования</div><div class="art-sentence">Санкция: штраф 20 000 – 45 000 руб. либо лишение свободы от 4 до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 106 (С) — Побег из места лишения свободы, из-под ареста</div><div class="art-sentence">Санкция: от 5 до 7 лет; группой — от 6 до 9 лет; с насилием или оружием — от 8 до 12 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 107 (С) — Неисполнение приговора суда, решения суда</div><div class="art-sentence">Санкция: штраф 15 000 – 30 000 руб. либо лишение свободы от 4 до 10 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 108 (С) — Посягательство на жизнь сотрудника правоохранительного органа</div><div class="art-sentence">Санкция: лишение свободы от 6 до 12 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 109 (С) — Применение насилия в отношении представителя власти</div><div class="art-sentence">Санкция: не опасного — штраф 10 000 – 25 000 руб. либо от 3 до 7 лет; опасного — от 5 до 10 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 110 — Оскорбление представителя власти</div><div class="art-sentence">Санкция: штраф 5 000 – 15 000 руб. либо лишение свободы от 1 до 3 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 111 — Подделка, изготовление или оборот поддельных документов</div><div class="art-sentence">Санкция: лишение свободы от 3 до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 112 — Самоуправство</div><div class="art-sentence">Санкция: лишение свободы от 2 до 5 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 113 — Неуплата штрафа либо отказ от его уплаты</div><div class="art-sentence">Санкция: лишение свободы от 1 до 4 лет. Неуплатой признаётся отсутствие активных действий в течение 3 минут с момента выписки чека.</div></div>
+        <div class="article-card"><div class="art-header">Статья 114 — Понятие преступлений против военной службы</div><div class="art-sentence">Преступления против установленного порядка прохождения военной службы, совершённые военнослужащими.</div></div>
+        <div class="article-card"><div class="art-header">Статья 115 (С) — Дезертирство</div><div class="art-sentence">Санкция: от 5 до 10 лет; с оружием — от 8 до 13 лет; в военное время — от 13 до 15 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 116 (С) — Незаконный оборот наркотиков (приобретение, хранение)</div><div class="art-sentence">Санкция: от 2 до 7 лет + штраф 10 000 – 25 000 руб.; сбыт — от 4 до 9 лет + штраф 25 000 – 45 000 руб.</div></div>
+        <div class="article-card"><div class="art-header">Статья 117 — Склонение к потреблению наркотических средств</div><div class="art-sentence">Санкция: лишение свободы от 3 до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 118 (С) — Незаконное культивирование растений, содержащих наркотики</div><div class="art-sentence">Санкция: лишение свободы от 5 до 9 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 119 — Организация либо содержание притонов</div><div class="art-sentence">Санкция: лишение свободы от 3 до 6 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 120 — Вовлечение в занятие проституцией</div><div class="art-sentence">Санкция: штраф 15 000 – 35 000 руб. либо лишение свободы от 2 до 5 лет.</div></div>
+        <div class="article-card"><div class="art-header">Статья 121 — Обязательность исполнения настоящего кодекса</div><div class="art-sentence">Обязателен для всех судов, прокуратуры, следственных органов, должностных лиц и граждан на территории РФ.</div></div>
+        <div class="article-card"><div class="art-header">Статья 122 — Толкование норм настоящего кодекса</div><div class="art-sentence">Осуществляется Верховным судом РФ. Официальное разъяснение даёт Премьер-министр.</div></div>
+        <div class="article-card"><div class="art-header">Статья 123 — Вступление в силу настоящего кодекса</div><div class="art-sentence">Со дня официального опубликования.</div></div>
+        <div class="footer-note">(С) — после отбытия наказания судимость 14 дней (ст.40 УК).</div>
+    </div>
+
+    <!-- =============== УПК РФ: каждая статья отдельно (все номера) =============== -->
+    <div id="upk" class="tab-pane">
+        <div class="article-card"><div class="art-header">Статья 1 УПК РФ — Законы, определяющие порядок уголовного судопроизводства</div><div class="art-sentence">Порядок устанавливается настоящим Кодексом, основанным на Конституции РФ. Обязателен для всех участников.</div></div>
+        <div class="article-card"><div class="art-header">Статья 2 УПК РФ — Действие уголовно-процессуального закона в пространстве</div><div class="art-sentence">Производство по уголовному делу на территории РФ ведётся в соответствии с УПК РФ независимо от места совершения преступления.</div></div>
+        <div class="article-card"><div class="art-header">Статья 3 УПК РФ — Действие уголовно-процессуального закона во времени</div><div class="art-sentence">Применяется закон, действующий во время производства соответствующего процессуального действия.</div></div>
+        <div class="article-card"><div class="art-header">Статья 4 УПК РФ — Основные понятия</div><div class="art-sentence">Алиби, апелляционная инстанция, близкие родственники, государственный обвинитель, дознаватель, дознание, досудебное производство, прокурор, свидетельский иммунитет, стороны обвинения и защиты и др.</div></div>
+        <div class="article-card"><div class="art-header">Статья 5 УПК РФ — Назначение уголовного судопроизводства</div><div class="art-sentence">Защита прав потерпевших и защита личности от незаконного обвинения.</div></div>
+        <div class="article-card"><div class="art-header">Статья 6 УПК РФ — Законность при производстве по уголовному делу</div><div class="art-sentence">Суд, прокурор, следователь не вправе применять закон, противоречащий УПК РФ. Нарушение влечёт недопустимость доказательств.</div></div>
+        <div class="article-card"><div class="art-header">Статья 7 УПК РФ — Независимость судей</div><div class="art-sentence">Судьи независимы, подчиняются только Конституции и федеральному закону.</div></div>
+        <div class="article-card"><div class="art-header">Статья 8 УПК РФ — Уважение чести и достоинства личности</div><div class="art-sentence">Запрещаются действия, унижающие честь, а также пытки и жестокое обращение.</div></div>
+        <div class="article-card"><div class="art-header">Статья 9 УПК РФ — Неприкосновенность личности</div><div class="art-sentence">До доказывания виновности лицо не может быть задержано на срок более 60 минут.</div></div>
+        <div class="article-card"><div class="art-header">Статья 10 УПК РФ — Охрана прав и свобод человека и гражданина</div><div class="art-sentence">Суд, прокурор, следователь обязаны разъяснять участникам их права и обеспечивать возможность их осуществления.</div></div>
+        <div class="article-card"><div class="art-header">Статья 11 УПК РФ — Презумпция невиновности</div><div class="art-sentence">Обвиняемый считается невиновным, пока его вина не доказана. Все сомнения толкуются в пользу обвиняемого.</div></div>
+        <div class="article-card"><div class="art-header">Статья 12 УПК РФ — Состязательность сторон</div><div class="art-sentence">Функции обвинения, защиты и разрешения дела отделены друг от друга. Суд создаёт условия для исполнения сторонами их обязанностей.</div></div>
+        <div class="article-card"><div class="art-header">Статья 13 УПК РФ — Обеспечение права на защиту</div><div class="art-sentence">Подозреваемому и обвиняемому обеспечивается право на защиту лично либо с помощью адвоката.</div></div>
+        <div class="article-card"><div class="art-header">Статья 14 УПК РФ — Свобода оценки доказательств</div><div class="art-sentence">Доказательства оцениваются по внутреннему убеждению, основанному на их совокупности.</div></div>
+        <div class="article-card"><div class="art-header">Статья 15 УПК РФ — Право на обжалование процессуальных действий и решений</div><div class="art-sentence">Действия (бездействие) и решения суда, прокурора, следователя, дознавателя могут быть обжалованы.</div></div>
+        <div class="article-card"><div class="art-header">Статья 16 УПК РФ — Меры процессуального принуждения и уголовного воздействия</div><div class="art-sentence">Привод, временное отстранение от должности, задержание, арест.</div></div>
+        <div class="article-card"><div class="art-header">Статья 17 УПК РФ — Привод</div><div class="art-sentence">Принудительное доставление лица к дознавателю, следователю или в суд при неявке без уважительной причины.</div></div>
+        <div class="article-card"><div class="art-header">Статья 18 УПК РФ — Временное отстранение от должности и лишение права занимать государственные должности</div><div class="art-sentence">На срок до 72 часов. Для членов Правительства — по представлению Генпрокурора Премьер-министру.</div></div>
+        <div class="article-card"><div class="art-header">Статья 19 УПК РФ — Задержание</div><div class="art-sentence">Мера процессуального принуждения на срок не более 60 минут с момента фактического задержания.</div></div>
+        <div class="article-card"><div class="art-header">Статья 20 УПК РФ — Арест</div><div class="art-sentence">Мера лишения свободы с момента установления вины и начала содержания в СИЗО или исправительной колонии.</div></div>
+        <div class="article-card"><div class="art-header">Статья 21 УПК РФ — Неотложное уголовное производство и упрощённый формат</div><div class="art-sentence">Сотрудник вправе сам признать виновным без суда, если лицо застигнуто на месте, есть 3+ очевидцев, явные следы, розыск или видеофиксация.</div></div>
+        <div class="article-card"><div class="art-header">Статья 22 УПК РФ — Основания для задержания</div><div class="art-sentence">Когда лицо застигнуто при совершении преступления, 3+ очевидца указывают на него, явные следы, розыск, видеофиксация.</div></div>
+        <div class="article-card"><div class="art-header">Статья 23 УПК РФ — Права задержанного</div><div class="art-sentence">Не свидетельствовать против себя; требовать адвоката (государственного — ждать 5+5 мин); один звонок (2 мин); конфиденциальная беседа с адвокатом до 3 мин.</div></div>
+        <div class="article-card"><div class="art-header">Статья 24 УПК РФ — Реализация прав задержанного</div><div class="art-sentence">Права реализуются последовательно. Адвокат вызывается через общую рацию. Время ожидания — 5 минут ответа + 5 минут приезда.</div></div>
+        <div class="article-card"><div class="art-header">Статья 25 УПК РФ — Порядок проведения задержания</div><div class="art-sentence">9 шагов: спецсредства → идентификация → огласить статьи → личный обыск → разъяснить права → доставить → видеофиксация DOZOR → 60 минут → освободить или арест.</div></div>
+        <div class="article-card"><div class="art-header">Статья 26 УПК РФ — Допуск на место проведения процессуальных действий</div><div class="art-sentence">Посторонние удаляются. Субъекты: сотрудник, задержанный, один адвокат, до одного прокурора, до одного сотрудника СК.</div></div>
+        <div class="article-card"><div class="art-header">Статья 27 УПК РФ — Особенности задержания госслужащих и адвокатов</div><div class="art-sentence">Только по тяжким/особо тяжким (40 составов). Вызов СК/прокурора (5+5 мин). При назначении лишения свободы — увольнение / прекращение статуса.</div></div>
+        <div class="article-card"><div class="art-header">Статья 28 УПК РФ — Полномочия субъектов процессуальных действий</div><div class="art-sentence">Сотрудник выносит решение, если иное не передано СК или прокурору.</div></div>
+        <div class="article-card"><div class="art-header">Статья 29 УПК РФ — Основания окончания задержания и освобождения</div><div class="art-sentence">Недостаточно доказательств; наказание не связано с лишением свободы; истекли 60 минут.</div></div>
+        <div class="article-card"><div class="art-header">Статья 30 УПК РФ — Личный обыск</div><div class="art-sentence">Производится при задержании для изъятия орудий, предметов, документов, имеющих значение для дела.</div></div>
+        <div class="article-card"><div class="art-header">Статья 31 УПК РФ — Законное требование</div><div class="art-sentence">Требование, основанное на НПА, выраженное в устной или письменной форме. Перед выдвижением сотрудник обязан представиться.</div></div>
+        <div class="article-card"><div class="art-header">Статья 32 УПК РФ — Передача процессуальных действий</div><div class="art-sentence">Сотрудники ФСО, военнослужащие обязаны передать задержание в органы внутренних дел или ФСБ.</div></div>
+        <div class="article-card"><div class="art-header">Статья 33 УПК РФ — Основания отказа в возбуждении уголовного дела или прекращения уголовного дела</div><div class="art-sentence">Отсутствие события или состава преступления; истечение сроков давности; выезд подозреваемого за пределы РФ.</div></div>
+        <div class="article-card"><div class="art-header">Статья 34 УПК РФ — Прекращение уголовного дела в связи с судебным штрафом или дисциплинарным взысканием</div><div class="art-sentence">Суд вправе прекратить дело и назначить судебный штраф или применить дисциплинарное взыскание к госслужащему.</div></div>
+        <div class="article-card"><div class="art-header">Статья 35 УПК РФ — Основания прекращения уголовного преследования</div><div class="art-sentence">Непричастность, прекращение дела, акт о помиловании, наличие вступившего в силу приговора по тому же обвинению.</div></div>
+        <div class="article-card"><div class="art-header">Статья 36 УПК РФ — Прекращение уголовного преследования в связи с внесением залога</div><div class="art-sentence">Согласно ст.38 УК РФ (залог от 10 000 до 100 000 руб.).</div></div>
+        <div class="article-card"><div class="art-header">Статья 37 УПК РФ — Полномочия суда</div><div class="art-sentence">Признать виновным, прекратить дело, отменить или изменить решение нижестоящего суда.</div></div>
+        <div class="article-card"><div class="art-header">Статья 38 УПК РФ — Состав суда</div><div class="art-sentence">Рассмотрение уголовных дел осуществляется коллегиально или судьёй единолично.</div></div>
+        <div class="article-card"><div class="art-header">Статья 39 УПК РФ — Подсудность уголовных дел</div><div class="art-sentence">Определяется федеральным конституционным законом «О судебной системе».</div></div>
+        <div class="article-card"><div class="art-header">Статья 40 УПК РФ — Передача уголовного дела по подсудности</div><div class="art-sentence">Судья выносит постановление о направлении дела по подсудности, если оно не подсудно данному суду.</div></div>
+        <div class="article-card"><div class="art-header">Статья 41 УПК РФ — Прокурор</div><div class="art-sentence">Осуществляет уголовное преследование и надзор за процессуальной деятельностью органов дознания и следствия.</div></div>
+        <div class="article-card"><div class="art-header">Статья 42 УПК РФ — Следователь</div><div class="art-sentence">Должностное лицо, уполномоченное осуществлять предварительное следствие.</div></div>
+        <div class="article-card"><div class="art-header">Статья 43 УПК РФ — Руководитель следственного органа</div><div class="art-sentence">Организует и контролирует работу следователей, даёт указания, изымает дела.</div></div>
+        <div class="article-card"><div class="art-header">Статья 44 УПК РФ — Орган дознания</div><div class="art-sentence">Органы внутренних дел, военной полиции, ФСО. Проводят дознание и неотложные следственные действия.</div></div>
+        <div class="article-card"><div class="art-header">Статья 45 УПК РФ — Начальник органа дознания</div><div class="art-sentence">Поручает проверку сообщений, даёт указания дознавателю, продлевает сроки.</div></div>
+        <div class="article-card"><div class="art-header">Статья 46 УПК РФ — Дознаватель</div><div class="art-sentence">Должностное лицо органа дознания, производящее дознание.</div></div>
+        <div class="article-card"><div class="art-header">Статья 47 УПК РФ — Потерпевший</div><div class="art-sentence">Лицо, которому преступлением причинён физический, имущественный или моральный вред.</div></div>
+        <div class="article-card"><div class="art-header">Статья 48 УПК РФ — Подозреваемый и обвиняемый</div><div class="art-sentence">Лицо, в отношении которого возбуждено дело или задержано. Обвиняемый — после предъявления обвинения.</div></div>
+        <div class="article-card"><div class="art-header">Статья 49 УПК РФ — Адвокат</div><div class="art-sentence">Лицо, осуществляющее защиту прав и интересов подозреваемых и обвиняемых.</div></div>
+        <div class="article-card"><div class="art-header">Статья 50 УПК РФ — Свидетель</div><div class="art-sentence">Лицо, которому могут быть известны обстоятельства, имеющие значение для дела.</div></div>
+        <div class="article-card"><div class="art-header">Статья 51 УПК РФ — Специалист</div><div class="art-sentence">Лицо, обладающее специальными знаниями, привлекаемое для содействия в обнаружении и закреплении доказательств.</div></div>
+        <div class="article-card"><div class="art-header">Статья 52-60 УПК РФ — Отводы</div><div class="art-sentence">Судья, прокурор, следователь, дознаватель, специалист подлежат отводу при наличии родственных связей или иной заинтересованности.</div></div>
+        <div class="article-card"><div class="art-header">Статья 61-75 УПК РФ — Доказывание</div><div class="art-sentence">Обстоятельства, подлежащие доказыванию. Доказательства: показания, заключения, протоколы, вещественные доказательства. Недопустимые доказательства не имеют силы.</div></div>
+        <div class="article-card"><div class="art-header">Статья 76-81 УПК РФ — Возбуждение уголовного дела</div><div class="art-sentence">Поводы: заявление, явка с повинной, рапорт. Решение о возбуждении или отказе.</div></div>
+        <div class="article-card"><div class="art-header">Статья 82-86 УПК РФ — Формы предварительного расследования</div><div class="art-sentence">Предварительное следствие и дознание. Подследственность определяется по статьям.</div></div>
+        <div class="article-card"><div class="art-header">Статья 87-90 УПК РФ — Предварительное следствие</div><div class="art-sentence">Производство следственных действий, протокол, следственная группа.</div></div>
+        <div class="article-card"><div class="art-header">Статья 91-95 УПК РФ — Следственные действия</div><div class="art-sentence">Осмотр, освидетельствование, следственный эксперимент, обыск, допрос (продолжительность 60 мин, с задержанием — 35 мин).</div></div>
+        <div class="article-card"><div class="art-header">Статья 96-98 УПК РФ — Заключение специалиста и направление дела в суд</div><div class="art-sentence">Прокурор утверждает обвинительное заключение и направляет дело в суд.</div></div>
+        <div class="article-card"><div class="art-header">Статья 99-117 УПК РФ — Судебное производство</div><div class="art-sentence">Назначение заседания, судебное следствие, прения сторон, последнее слово, приговор. Разумный срок — 9 дней.</div></div>
+        <div class="article-card"><div class="art-header">Статья 118-120 УПК РФ — Применение физической силы, спецсредств, оружия сотрудниками</div><div class="art-sentence">Два предупреждения перед выстрелом (кроме явной угрозы жизни). Электрошокер — одно предупреждение.</div></div>
+        <div class="article-card"><div class="art-header">Статья 121-128 УПК РФ — Оперативно-розыскная деятельность</div><div class="art-sentence">Опрос, наведение справок, контрольная закупка, наблюдение, обследование, снятие информации, оперативное внедрение. Проводится по приказу.</div></div>
+        <div class="article-card"><div class="art-header">Статья 129 УПК РФ — Обязательность исполнения настоящего кодекса</div><div class="art-sentence">Обязателен для всех судов, прокуратуры, следственных органов, должностных лиц и граждан.</div></div>
+        <div class="article-card"><div class="art-header">Статья 130 УПК РФ — Толкование норм настоящего кодекса</div><div class="art-sentence">Осуществляется Верховным судом РФ.</div></div>
+        <div class="article-card"><div class="art-header">Статья 131 УПК РФ — Вступление в силу настоящего кодекса</div><div class="art-sentence">Со дня официального опубликования.</div></div>
+        <div class="footer-note">Все статьи УПК РФ (1–131) приведены в соответствии с вашим исходным документом. Каждая — отдельно.</div>
+    </div>
+
+    <!-- =============== ФЗ «О полиции» (ст.1-30) =============== -->
+    <div id="police" class="tab-pane">
+        <div class="article-card"><div class="art-header">Статья 1 — Назначение полиции</div><div class="art-sentence">Защита жизни, здоровья, прав и свобод граждан, противодействие преступности, охрана общественного порядка и собственности.</div></div>
+        <div class="article-card"><div class="art-header">Статья 2 — Основные направления деятельности полиции</div><div class="art-sentence">9 направлений: защита личности, предупреждение и пресечение преступлений, дознание, розыск, производство по адм. делам, охрана порядка, безопасность дорожного движения, госзащита, экспертиза.</div></div>
+        <div class="article-card"><div class="art-header">Статья 3 — Правовая основа деятельности полиции</div><div class="art-sentence">Конституция, ФКЗ, ФЗ «О полиции», НПА Президента, Правительства, МВД.</div></div>
+        <div class="article-card"><div class="art-header">Статья 4 — Организация полиции</div><div class="art-sentence">Полиция — составная часть МВД. Руководство — министр внутренних дел, начальники территориальных органов.</div></div>
+        <div class="article-card"><div class="art-header">Статья 5 — Соблюдение и уважение прав и свобод человека и гражданина</div><div class="art-sentence">Запрет пыток, насилия. При обращении сотрудник обязан назвать должность, звание, фамилию, предъявить удостоверение.</div></div>
+        <div class="article-card"><div class="art-header">Статья 6 — Законность</div><div class="art-sentence">Полиция действует в точном соответствии с законом. Ограничение прав только по основаниям ФЗ.</div></div>
+        <div class="article-card"><div class="art-header">Статья 7 — Беспристрастность</div><div class="art-sentence">Защита прав независимо от пола, расы, национальности, имущественного положения, отношения к религии.</div></div>
+        <div class="article-card"><div class="art-header">Статья 8 — Открытость и публичность</div><div class="art-sentence">Деятельность открыта для общества, кроме гостайны. Граждане вправе получать достоверную информацию.</div></div>
+        <div class="article-card"><div class="art-header">Статья 9 — Общественное доверие и поддержка граждан</div><div class="art-sentence">Действия полиции должны быть обоснованными. При нарушении прав полиция приносит извинения.</div></div>
+        <div class="article-card"><div class="art-header">Статья 10 — Взаимодействие и сотрудничество</div><div class="art-sentence">Полиция взаимодействует с другими правоохранительными органами, общественными объединениями и гражданами.</div></div>
+        <div class="article-card"><div class="art-header">Статья 11 — Обязанности полиции</div><div class="art-sentence">Принимать заявления, прибывать на место, оказывать первую помощь, выявлять причины преступлений, охранять порядок, дознание, розыск, безопасность дорожного движения.</div></div>
+        <div class="article-card"><div class="art-header">Статья 12 — Права полиции</div><div class="art-sentence">Требовать прекращения правонарушений, проверять документы, вызывать, патрулировать, останавливать транспорт, применять спецсредства, блокировать территории, использовать видеофиксацию.</div></div>
+        <div class="article-card"><div class="art-header">Статья 13 — Задержание</div><div class="art-sentence">Срок задержания не более 60 минут. Обязательно разъяснить право на юридическую помощь и отказ от дачи объяснения.</div></div>
+        <div class="article-card"><div class="art-header">Статья 14 — Вскрытие транспортного средства</div><div class="art-sentence">Для спасения жизни, безопасности при ЧС, задержания преступников, пресечения преступления.</div></div>
+        <div class="article-card"><div class="art-header">Статья 15 — Оцепление (блокирование) территорий</div><div class="art-sentence">При ЧС, массовых беспорядках, розыске, КТО. В зоне оцепления — личный досмотр и досмотр транспорта.</div></div>
+        <div class="article-card"><div class="art-header">Статья 16 — Право на применение физической силы, спецсредств и огнестрельного оружия</div><div class="art-sentence">Сотрудник вправе применять лично или в составе группы. Превышение влечёт ответственность.</div></div>
+        <div class="article-card"><div class="art-header">Статья 17 — Порядок применения физической силы, спецсредств и огнестрельного оружия</div><div class="art-sentence">Предупредить о намерении и дать время для выполнения требований. Без предупреждения — при непосредственной угрозе жизни.</div></div>
+        <div class="article-card"><div class="art-header">Статья 18 — Применение физической силы, специальных средств и огнестрельного оружия (случаи)</div><div class="art-sentence">Спецсредства: палки, электрошокеры, бронемашины — для отражения нападения, пресечения преступления, задержания. Оружие — при угрозе жизни, для задержания вооружённого, освобождения заложников, отражения нападения на объекты.</div></div>
+        <div class="article-card"><div class="art-header">Статья 19 — Гарантии личной безопасности вооружённого сотрудника полиции</div><div class="art-sentence">Вправе обнажить оружие и привести в готовность. При попытке приблизиться — применить оружие.</div></div>
+        <div class="article-card"><div class="art-header">Статья 20 — Сотрудник полиции</div><div class="art-sentence">Гражданин РФ, осуществляющий службу в органах внутренних дел со специальным званием.</div></div>
+        <div class="article-card"><div class="art-header">Статья 21 — Специальные звания сотрудников полиции</div><div class="art-sentence">Рядовой, младший начальствующий состав (сержанты, прапорщики), средний (лейтенанты, капитан), старший (майор, полковник), высший (генерал-майор — генерал-полковник).</div></div>
+        <div class="article-card"><div class="art-header">Статья 22 — Гарантии правовой защиты сотрудника полиции</div><div class="art-sentence">Сотрудник находится под защитой государства. Законные требования обязательны для всех. Воспрепятствование влечёт ответственность.</div></div>
+        <div class="article-card"><div class="art-header">Статья 23 — Ответственность сотрудника полиции</div><div class="art-sentence">Несёт ответственность за свои действия и за отдаваемые приказы.</div></div>
+        <div class="article-card"><div class="art-header">Статья 24 — Государственный контроль за деятельностью полиции</div><div class="art-sentence">Осуществляют Премьер-министр и Правительство РФ.</div></div>
+        <div class="article-card"><div class="art-header">Статья 25 — Судебный контроль и надзор</div><div class="art-sentence">Осуществляются в соответствии с ФКЗ и ФЗ.</div></div>
+        <div class="article-card"><div class="art-header">Статья 26 — Прокурорский надзор</div><div class="art-sentence">Надзор за исполнением полицией законов осуществляют Генеральный прокурор и подчинённые прокуроры.</div></div>
+        <div class="article-card"><div class="art-header">Статья 27 — Обжалование действий (бездействия) сотрудника полиции</div><div class="art-sentence">Могут быть обжалованы в вышестоящий орган, прокуратуру или суд.</div></div>
+        <div class="article-card"><div class="art-header">Статья 28 — Обязательность исполнения настоящего Федерального закона</div><div class="art-sentence">Обязателен для всех судов, прокуратуры, правоохранительных органов, должностных лиц и граждан.</div></div>
+        <div class="article-card"><div class="art-header">Статья 29 — Толкование норм настоящего Федерального закона</div><div class="art-sentence">Осуществляется Верховным судом РФ. Официальное разъяснение даёт Премьер-министр.</div></div>
+        <div class="article-card"><div class="art-header">Статья 30 — Вступление в силу настоящего Федерального закона</div><div class="art-sentence">Со дня официального опубликования.</div></div>
+    </div>
+
+    <!-- =============== УСТАВ МВД (все главы отдельными блоками) =============== -->
+    <div id="ustav" class="tab-pane">
+        <div class="article-card"><div class="art-header">Глава III. Статья 3.1 — 3.5 — Права и обязанности сотрудников</div><div class="art-sentence">Каждый полицейский обязан знать Устав. Незнание не освобождает от ответственности. Беспрекословное выполнение приказов вышестоящих. Запрещены действия, порочащие репутацию МВД. Знать руководство в лицо до Премьер-министра.</div></div>
+        <div class="article-card"><div class="art-header">Глава IV. Статья 4.1 — 4.7 — Режим работы и время отдыха</div><div class="art-sentence">Будние дни: 10:00–22:00, обед 14:00–15:00. Выходные и праздники: 10:00–20:00. При ЧС/военном положении — круглосуточно. Отдых разрешён только в раздевалке. Отпуск — 7 дней в месяц.</div></div>
+        <div class="article-card"><div class="art-header">Глава V. Статья 5.4 — 5.61 — Дисциплинарные взыскания</div><div class="art-sentence">Взыскания: предупреждение, выговор, увольнение, чёрный список, разжалование. 3 предупреждения = выговор, 2 выговора = увольнение. Запрещено: спать на посту (кроме раздевалки), отключать рацию, оскорблять, тату на лице/шее, неестественный цвет волос, яркий макияж, украшения (кроме часов и кольца).</div></div>
+        <div class="article-card"><div class="art-header">Глава VI. Статья 6.1 — 6.4 — Подразделения МВД</div><div class="art-sentence">УСБ — надзор за сотрудниками. ОСН «Гром» — спецоперации, антитеррор. ППС — патрулирование. ОРЛС — обучение. Уголовный розыск — ОРД, розыск.</div></div>
+        <div class="article-card"><div class="art-header">Глава VIII. Статья 8.2 — 9.1 — Внешний вид и субординация</div><div class="art-sentence">Форма по подразделению. Обращение: «Товарищ (звание) (фамилия)». Ответ: «Так точно» / «Никак нет». Выполнение приказа: «Есть».</div></div>
+    </div>
+
+    <!-- =============== ПАМЯТКИ И АЛГОРИТМЫ =============== -->
+    <div id="memory" class="tab-pane">
+        <div class="procedure-block"><div class="art-header">📌 ПОШАГОВЫЙ АЛГОРИТМ ЗАДЕРЖАНИЯ (ст.25 УПК)</div>
+            <div class="step"><span class="step-num">1</span> Применить спецсредства (наручники, электрошокер).</div>
+            <div class="step"><span class="step-num">2</span> Идентификация: «Должность, звание, фамилия» + удостоверение.</div>
+            <div class="step"><span class="step-num">3</span> Огласить статьи УК.</div>
+            <div class="step"><span class="step-num">4</span> Личный обыск (ст.30 УПК).</div>
+            <div class="step"><span class="step-num">5</span> Разъяснить права (ст.23 УПК).</div>
+            <div class="step"><span class="step-num">6</span> Доставить в орган дознания/следствия.</div>
+            <div class="step"><span class="step-num">7</span> Видеофиксация «DOZOR» (хранить 72 ч).</div>
+            <div class="step"><span class="step-num">8</span> Срок не более 60 минут.</div>
+            <div class="step"><span class="step-num">9</span> Освободить (нет доказательств) или арестовать.</div>
         </div>
-        
-        <div class="quiz-screen hidden" id="quizScreen">
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress" id="progressBar"></div>
-                </div>
-                <div class="question-number" id="progressText">Вопрос 1 из 25</div>
-            </div>
-            
-            <div class="question-container">
-                <div class="question-text" id="questionText"></div>
-                <div class="options-container" id="optionsContainer"></div>
-            </div>
-            
-            <button class="btn" id="nextBtn" disabled>Следующий вопрос</button>
+        <div class="procedure-block"><div class="art-header">📌 ПРАВА ЗАДЕРЖАННОГО (ст.23 УПК)</div>
+            <div class="step"><span class="step-num">•</span> Не свидетельствовать против себя и близких.</div>
+            <div class="step"><span class="step-num">•</span> Требовать адвоката (государственного — ждать 5+5 мин).</div>
+            <div class="step"><span class="step-num">•</span> Один телефонный звонок (2 минуты).</div>
+            <div class="step"><span class="step-num">•</span> Конфиденциальная беседа с адвокатом до 3 минут.</div>
         </div>
-        
-        <div class="result-screen hidden" id="resultScreen">
-            <h2>Викторина завершена!</h2>
-            <div class="score-display" id="scoreDisplay"></div>
-            <p id="resultText"></p>
-            
-            <div class="rating-container">
-                <div class="rating-title">Оцените викторину:</div>
-                <div class="rating-options" id="ratingOptions">
-                    <div class="rating-option" data-rating="1">1</div>
-                    <div class="rating-option" data-rating="2">2</div>
-                    <div class="rating-option" data-rating="3">3</div>
-                    <div class="rating-option" data-rating="4">4</div>
-                    <div class="rating-option" data-rating="5">5</div>
-                    <div class="rating-option" data-rating="6">6</div>
-                    <div class="rating-option" data-rating="7">7</div>
-                    <div class="rating-option" data-rating="8">8</div>
-                    <div class="rating-option" data-rating="9">9</div>
-                    <div class="rating-option" data-rating="10">10</div>
-                </div>
-                <div class="emoji-display" id="emojiDisplay">😊</div>
-                <button class="btn" id="restartBtn">Пройти еще раз</button>
-            </div>
+        <div class="procedure-block"><div class="art-header">📌 СРОКИ ДАВНОСТИ (ст.37 УК)</div>
+            <div class="step"><span class="step-num">небольшой тяжести</span> 3 дня</div>
+            <div class="step"><span class="step-num">средней тяжести</span> 10 дней</div>
+            <div class="step"><span class="step-num">тяжкие</span> 15 дней</div>
+            <div class="step"><span class="step-num">особо тяжкие</span> 21 день</div>
+        </div>
+        <div class="procedure-block"><div class="art-header">📌 СУДИМОСТЬ (ст.40 УК)</div>
+            <div class="step"><span class="step-num">⏱</span> Погашается через 14 календарных дней.</div>
+            <div class="step"><span class="step-num">💰</span> Штраф оплатить в течение 3 минут (ст.113 УК).</div>
+        </div>
+        <div class="procedure-block"><div class="art-header">📌 КАТЕГОРИИ ПРЕСТУПЛЕНИЙ (ст.12 УК)</div>
+            <div class="step"><span class="step-num">небольшой тяжести</span> до 3 лет л/с</div>
+            <div class="step"><span class="step-num">средней тяжести</span> до 6 лет (умышл.) / до 10 лет (неост.)</div>
+            <div class="step"><span class="step-num">тяжкие</span> до 10 лет (умышл.) / до 15 лет (неост.)</div>
+            <div class="step"><span class="step-num">особо тяжкие</span> свыше 10 лет л/с</div>
         </div>
     </div>
 
-    <script>
-        // Вопросы для викторины
-        const questions = [
-            {
-                question: "Какой климатообразующий фактор считается главнейшим?",
-                options: [
-                    "Географическая широта",
-                    "Удаленность от океана",
-                    "Рельеф местности",
-                    "Океанические течения"
-                ],
-                correct: 0,
-                explanation: "Географическая широта - главнейший фактор формирования климата, так как от неё зависит угол падения солнечных лучей и распределение тепла на Земле."
-            },
-            {
-                question: "Какое течение делает Мурманск незамерзающим портом?",
-                options: [
-                    "Лабрадорское",
-                    "Северо-Атлантическое",
-                    "Куросио",
-                    "Гольфстрим"
-                ],
-                correct: 1,
-                explanation: "Тёплое Северо-Атлантическое течение оказывает отепляющее действие на северо-западные районы Европы, благодаря чему Мурманск является незамерзающим портом."
-            },
-            {
-                question: "Что определяет континентальность климата?",
-                options: [
-                    "Высота над уровнем моря",
-                    "Удалённость от океанов и морей",
-                    "Направление горных хребтов",
-                    "Тип растительности"
-                ],
-                correct: 1,
-                explanation: "Удалённость от океанов и морей определяет континентальность климата. Чем дальше в глубь материка, тем больше колебания температуры воздуха и меньше количество осадков."
-            },
-            {
-                question: "Сколько основных климатических поясов на Земле?",
-                options: [
-                    "5",
-                    "7",
-                    "9",
-                    "11"
-                ],
-                correct: 1,
-                explanation: "На Земле 7 основных климатических поясов: экваториальный, тропический (в каждом полушарии), умеренный (в каждом полушарии), полярный (арктический и антарктический)."
-            },
-            {
-                question: "Какой климатический пояс один на оба полушария?",
-                options: [
-                    "Тропический",
-                    "Умеренный",
-                    "Экваториальный",
-                    "Субтропический"
-                ],
-                correct: 2,
-                explanation: "Экваториальный пояс - один на оба полушария, в отличие от тропического, умеренного и полярного поясов, которые есть в каждом полушарии."
-            },
-            {
-                question: "Что такое переходные климатические пояса?",
-                options: [
-                    "Пояса с нестабильным климатом",
-                    "Пояса между основными климатическими поясами",
-                    "Пояса в горах",
-                    "Пояса с экстремальным климатом"
-                ],
-                correct: 1,
-                explanation: "Переходные пояса расположены между основными климатическими поясами. Летом сюда приходят воздушные массы из соседнего пояса, более близкого к экватору, а зимой - из более 'полярного' пояса."
-            },
-            {
-                question: "Как холодные течения влияют на климат побережий?",
-                options: [
-                    "Делают климат теплее и влажнее",
-                    "Делают климат холоднее и суше",
-                    "Увеличивают количество осадков",
-                    "Уменьшают амплитуду температур"
-                ],
-                correct: 1,
-                explanation: "Холодные течения делают климат побережий холоднее и суше. В тропиках на побережьях, вдоль которых идут холодные течения, часто расположены пустыни."
-            },
-            {
-                question: "Какой тип климата характерен для субтропического пояса с жарким сухим летом и прохладной дождливой зимой?",
-                options: [
-                    "Муссонный",
-                    "Средиземноморский",
-                    "Резко континентальный",
-                    "Морской"
-                ],
-                correct: 1,
-                explanation: "Тип климата с жарким сухим летом и прохладной дождливой зимой называют средиземноморским. Он характерен для западных побережий материков в субтропическом поясе."
-            },
-            {
-                question: "Как горы влияют на климат?",
-                options: [
-                    "Увеличивают температуру воздуха",
-                    "Создают преграду на пути воздушных масс",
-                    "Уменьшают количество осадков",
-                    "Выравнивают климатические условия"
-                ],
-                correct: 1,
-                explanation: "Горы могут создавать преграду на пути воздушных масс, в то время как равнинный рельеф облегчает их вторжение. Например, Гималаи задерживают влажный муссон, вызывая обильные осадки на своих южных склонах."
-            },
-            {
-                question: "Какой климат характерен для внутренних районов Евразии?",
-                options: [
-                    "Морской",
-                    "Резко континентальный",
-                    "Субтропический",
-                    "Экваториальный"
-                ],
-                correct: 1,
-                explanation: "Во внутренних районах Евразии климат резко континентальный, с большими колебаниями температур (разница температур июля и января может достигать 60-70°C) и малым количеством осадков."
-            },
-            {
-                question: "В каком климатическом поясе летом господствуют тропические воздушные массы, а зимой - умеренные?",
-                options: [
-                    "Субэкваториальном",
-                    "Субтропическом",
-                    "Субарктическом",
-                    "Тропическом"
-                ],
-                correct: 1,
-                explanation: "В субтропическом поясе летом 'хозяйничает' тропический воздух (жарко и сухо), а зимой приходит воздух умеренных широт - температура понижается, идут дожди."
-            },
-            {
-                question: "Что такое климатическая диаграмма?",
-                options: [
-                    "Карта климатических поясов",
-                    "График годового хода температур и осадков",
-                    "Схема циркуляции атмосферы",
-                    "Диаграмма распределения давления"
-                ],
-                correct: 1,
-                explanation: "Климатическая диаграмма (климатограмма) - это график, на котором одновременно показаны годовой ход температур и количество осадков по месяцам в конкретном пункте."
-            },
-            {
-                question: "Какой фактор в наибольшей степени определяет наличие областей внутри климатических поясов?",
-                options: [
-                    "Географическая широта",
-                    "Удалённость от океана",
-                    "Высота над уровнем моря",
-                    "Растительный покров"
-                ],
-                correct: 1,
-                explanation: "Разные сочетания климатообразующих факторов определяют наличие областей внутри климатических поясов. Главный из них - удалённость (близость) от океана."
-            },
-            {
-                question: "В каком направлении протягиваются климатические пояса?",
-                options: [
-                    "В меридиональном",
-                    "В широтном",
-                    "В диагональном",
-                    "В произвольном"
-                ],
-                correct: 1,
-                explanation: "Климатические пояса протягиваются в широтном направлении в соответствии с зональностью климата, которая определяется в первую очередь географической широтой."
-            },
-            {
-                question: "Как теплые течения влияют на климат побережий?",
-                options: [
-                    "Делают климат холоднее и суше",
-                    "Делают климат теплее и влажнее",
-                    "Уменьшают количество осадков",
-                    "Увеличивают амплитуду температур"
-                ],
-                correct: 1,
-                explanation: "Если тёплые течения из низких широт приходят в высокие широты, климат побережий становится более тёплым и влажным."
-            },
-            {
-                question: "Сколько переходных климатических поясов на Земле?",
-                options: [
-                    "4",
-                    "6",
-                    "8",
-                    "10"
-                ],
-                correct: 1,
-                explanation: "На Земном шаре 7 основных и 6 переходных климатических поясов. В каждом полушарии есть по три переходных пояса: субэкваториальный, субтропический и субарктический."
-            },
-            {
-                question: "Какой климат характерен для восточного побережья Евразии в субтропическом поясе?",
-                options: [
-                    "Средиземноморский",
-                    "Муссонный",
-                    "Морской",
-                    "Резко континентальный"
-                ],
-                correct: 1,
-                explanation: "На восточном побережье Евразии в субтропическом поясе - муссонный климат с жарким влажным летом и холодной сухой зимой."
-            },
-            {
-                question: "Что происходит с температурой воздуха с увеличением высоты?",
-                options: [
-                    "Повышается",
-                    "Понижается",
-                    "Не изменяется",
-                    "Сначала повышается, потом понижается"
-                ],
-                correct: 1,
-                explanation: "С высотой температура воздуха понижается, климат становится холоднее. Это одна из причин высотной поясности в горах."
-            },
-            {
-                question: "В каком климатическом поясе находится город Касабланка?",
-                options: [
-                    "Тропическом",
-                    "Субтропическом",
-                    "Умеренном",
-                    "Экваториальном"
-                ],
-                correct: 1,
-                explanation: "Город Касабланка в Марокко находится в субтропическом климатическом поясе, для которого характерно жаркое сухое лето и прохладная дождливая зима."
-            },
-            {
-                question: "Как распределение воды и суши на поверхности Земли влияет на климат?",
-                options: [
-                    "Не влияет на климат",
-                    "Определяет строгую зональность климата",
-                    "Изменяет строгую зональность климата",
-                    "Увеличивает количество осадков повсеместно"
-                ],
-                correct: 2,
-                explanation: "Распределение воды и суши на поверхности Земли, а также рельеф материков изменяют строгую зональность климата, создавая области с разными типами климата внутри поясов."
-            },
-            {
-                question: "Какой климатический пояс характеризуется максимальным количеством осадков в течение года?",
-                options: [
-                    "Тропический",
-                    "Экваториальный",
-                    "Умеренный",
-                    "Субтропический"
-                ],
-                correct: 1,
-                explanation: "Экваториальный пояс характеризуется максимальным количеством осадков в течение года, так как здесь постоянно высокие температуры и высокая влажность воздуха."
-            },
-            {
-                question: "В каком климатическом поясе расположена большая часть территории России?",
-                options: [
-                    "Субтропическом",
-                    "Умеренном",
-                    "Субарктическом",
-                    "Арктическом"
-                ],
-                correct: 1,
-                explanation: "Большая часть территории России расположена в умеренном климатическом поясе, который характеризуется четкой сезонностью и умеренным количеством осадков."
-            },
-            {
-                question: "Какой климатический пояс характеризуется минимальным количеством осадков?",
-                options: [
-                    "Экваториальный",
-                    "Тропический",
-                    "Умеренный",
-                    "Арктический"
-                ],
-                correct: 1,
-                explanation: "Тропический пояс характеризуется минимальным количеством осадков, особенно в его континентальных областях, где формируются пустыни."
-            },
-            {
-                question: "Какой из перечисленных факторов НЕ относится к климатообразующим?",
-                options: [
-                    "Географическая широта",
-                    "Рельеф местности",
-                    "Океанические течения",
-                    "Плотность населения"
-                ],
-                correct: 3,
-                explanation: "Плотность населения не относится к климатообразующим факторам. Основные климатообразующие факторы: географическая широта, циркуляция воздушных масс, океанические течения, удаленность от океана и рельеф."
-            },
-            {
-                question: "Выделите все основные климатические пояса:",
-                options: [
-                    "Экваториальный",
-                    "Тропический",
-                    "Умеренный",
-                    "Арктический/Антарктический",
-                    "Субтропический",
-                    "Субэкваториальный",
-                    "Субарктический"
-                ],
-                correct: [0, 1, 2, 3],
-                multiSelect: true,
-                explanation: "Основные климатические пояса: экваториальный, тропический, умеренный и арктический/антарктический. Субтропический, субэкваториальный и субарктический - переходные пояса."
-            }
-        ];
-
-        // Элементы DOM
-        const introScreen = document.getElementById('introScreen');
-        const quizScreen = document.getElementById('quizScreen');
-        const resultScreen = document.getElementById('resultScreen');
-        const startBtn = document.getElementById('startBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const restartBtn = document.getElementById('restartBtn');
-        const questionText = document.getElementById('questionText');
-        const optionsContainer = document.getElementById('optionsContainer');
-        const progressBar = document.getElementById('progressBar');
-        const progressText = document.getElementById('progressText');
-        const scoreDisplay = document.getElementById('scoreDisplay');
-        const resultText = document.getElementById('resultText');
-        const ratingOptions = document.getElementById('ratingOptions');
-        const emojiDisplay = document.getElementById('emojiDisplay');
-        const shapesContainer = document.getElementById('shapesContainer');
-
-        // Переменные состояния
-        let currentQuestion = 0;
-        let score = 0;
-        let userAnswers = [];
-        let selectedRating = 0;
-
-        // Создание геометрических фигур для фона
-        function createShapes() {
-            const shapes = ['circle', 'triangle', 'square'];
-            for (let i = 0; i < 15; i++) {
-                const shape = document.createElement('div');
-                const shapeType = shapes[Math.floor(Math.random() * shapes.length)];
-                shape.classList.add('shape', shapeType);
-                
-                shape.style.left = `${Math.random() * 100}%`;
-                shape.style.top = `${Math.random() * 100}%`;
-                
-                const size = 30 + Math.random() * 70;
-                if (shapeType === 'circle') {
-                    shape.style.width = `${size}px`;
-                    shape.style.height = `${size}px`;
-                } else if (shapeType === 'triangle') {
-                    const borderSize = size / 2;
-                    shape.style.borderLeft = `${borderSize}px solid transparent`;
-                    shape.style.borderRight = `${borderSize}px solid transparent`;
-                    shape.style.borderBottom = `${size}px solid #00c6ff`;
-                } else if (shapeType === 'square') {
-                    shape.style.width = `${size}px`;
-                    shape.style.height = `${size}px`;
-                }
-                
-                shape.style.animationDelay = `${Math.random() * 20}s`;
-                
-                shapesContainer.appendChild(shape);
-            }
-        }
-
-        // Инициализация викторины
-        function initQuiz() {
-            createShapes();
-            
-            startBtn.addEventListener('click', startQuiz);
-            nextBtn.addEventListener('click', nextQuestion);
-            restartBtn.addEventListener('click', restartQuiz);
-            
-            const ratingElements = ratingOptions.querySelectorAll('.rating-option');
-            ratingElements.forEach(el => {
-                el.addEventListener('click', () => {
-                    ratingElements.forEach(e => e.classList.remove('selected'));
-                    el.classList.add('selected');
-                    selectedRating = parseInt(el.getAttribute('data-rating'));
-                    updateEmoji(selectedRating);
-                });
+    <div class="footer-note">Алексей Беллов | Каждая статья отдельно. Все статьи УК РФ (ст.1-123), УПК РФ (ст.1-131), ФЗ «О полиции» (ст.1-30), Устав МВД (все главы). Без сокращений, без объединений.</div>
+</div>
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+    (function(){
+        const btns=document.querySelectorAll('.tab-btn');
+        const panes=document.querySelectorAll('.tab-pane');
+        btns.forEach(btn=>{
+            btn.addEventListener('click',()=>{
+                const id=btn.getAttribute('data-tab');
+                panes.forEach(p=>p.classList.remove('active-pane'));
+                btns.forEach(b=>b.classList.remove('active'));
+                document.getElementById(id).classList.add('active-pane');
+                btn.classList.add('active');
             });
-        }
-
-        // Начало викторины
-        function startQuiz() {
-            introScreen.classList.add('hidden');
-            quizScreen.classList.remove('hidden');
-            showQuestion();
-        }
-
-        // Показать текущий вопрос
-        function showQuestion() {
-            const question = questions[currentQuestion];
-            questionText.textContent = question.question;
-            
-            const progress = ((currentQuestion) / questions.length) * 100;
-            progressBar.style.width = `${progress}%`;
-            progressText.textContent = `Вопрос ${currentQuestion + 1} из ${questions.length}`;
-            
-            optionsContainer.innerHTML = '';
-            
-            if (question.multiSelect) {
-                const multiSelectContainer = document.createElement('div');
-                multiSelectContainer.classList.add('multi-select-container');
-                
-                question.options.forEach((option, index) => {
-                    const optionElement = document.createElement('div');
-                    optionElement.classList.add('multi-select-option');
-                    
-                    const checkbox = document.createElement('div');
-                    checkbox.classList.add('multi-select-checkbox');
-                    
-                    const optionText = document.createElement('span');
-                    optionText.textContent = option;
-                    
-                    optionElement.appendChild(checkbox);
-                    optionElement.appendChild(optionText);
-                    
-                    optionElement.addEventListener('click', () => {
-                        optionElement.classList.toggle('selected');
-                        
-                        if (!userAnswers[currentQuestion]) {
-                            userAnswers[currentQuestion] = [];
-                        }
-                        
-                        const answerIndex = userAnswers[currentQuestion].indexOf(index);
-                        if (answerIndex === -1) {
-                            userAnswers[currentQuestion].push(index);
-                        } else {
-                            userAnswers[currentQuestion].splice(answerIndex, 1);
-                        }
-                        
-                        nextBtn.disabled = userAnswers[currentQuestion].length === 0;
-                    });
-                    
-                    multiSelectContainer.appendChild(optionElement);
-                });
-                
-                optionsContainer.appendChild(multiSelectContainer);
-            } else {
-                question.options.forEach((option, index) => {
-                    const optionElement = document.createElement('div');
-                    optionElement.classList.add('option');
-                    optionElement.textContent = option;
-                    optionElement.addEventListener('click', () => selectOption(index));
-                    optionsContainer.appendChild(optionElement);
-                });
-            }
-            
-            nextBtn.disabled = true;
-        }
-
-        // Выбор варианта ответа
-        function selectOption(optionIndex) {
-            const options = optionsContainer.querySelectorAll('.option');
-            
-            options.forEach(option => {
-                option.classList.remove('selected');
-            });
-            
-            options[optionIndex].classList.add('selected');
-            
-            userAnswers[currentQuestion] = optionIndex;
-            
-            nextBtn.disabled = false;
-        }
-
-        // Переход к следующему вопросу
-        function nextQuestion() {
-            const question = questions[currentQuestion];
-            const correctAnswer = question.correct;
-            const userAnswer = userAnswers[currentQuestion];
-            
-            if (question.multiSelect) {
-                const options = optionsContainer.querySelectorAll('.multi-select-option');
-                
-                const correctCount = Array.isArray(correctAnswer) ? correctAnswer.length : 1;
-                const userCorrect = userAnswer.filter(ans => correctAnswer.includes(ans)).length;
-                
-                options.forEach((option, index) => {
-                    if (correctAnswer.includes(index)) {
-                        option.classList.add('correct');
-                    } else if (userAnswer.includes(index)) {
-                        option.classList.add('incorrect');
-                    }
-                });
-                
-                const multiSelectResult = document.createElement('div');
-                multiSelectResult.classList.add('multi-select-result');
-                multiSelectResult.innerHTML = `<strong>Результат:</strong> Вы правильно выбрали ${userCorrect} из ${correctCount} вариантов.`;
-                optionsContainer.parentNode.appendChild(multiSelectResult);
-                
-                if (userCorrect === correctCount && userAnswer.length === correctCount) {
-                    score++;
-                }
-            } else {
-                const options = optionsContainer.querySelectorAll('.option');
-                
-                options[correctAnswer].classList.add('correct');
-                if (userAnswer !== correctAnswer) {
-                    options[userAnswer].classList.add('incorrect');
-                } else {
-                    score++;
-                }
-            }
-            
-            const explanation = document.createElement('div');
-            explanation.classList.add('correct-answer');
-            if (question.multiSelect) {
-                const correctOptions = Array.isArray(correctAnswer) ? 
-                    correctAnswer.map(idx => question.options[idx]).join(', ') : 
-                    question.options[correctAnswer];
-                explanation.innerHTML = `<strong>Правильные ответы:</strong> ${correctOptions}<br>
-                                        <div class="feedback">${question.explanation}</div>`;
-            } else {
-                explanation.innerHTML = `<strong>Правильный ответ:</strong> ${question.options[correctAnswer]}<br>
-                                        <div class="feedback">${question.explanation}</div>`;
-            }
-            optionsContainer.parentNode.appendChild(explanation);
-            
-            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Завершить викторину' : 'Следующий вопрос';
-            nextBtn.onclick = currentQuestion === questions.length - 1 ? finishQuiz : nextQuestionStep;
-        }
-
-        // Шаг перехода к следующему вопросу
-        function nextQuestionStep() {
-            currentQuestion++;
-            showQuestion();
-        }
-
-        // Завершение викторины
-        function finishQuiz() {
-            quizScreen.classList.add('hidden');
-            resultScreen.classList.remove('hidden');
-            
-            const percentage = Math.round((score / questions.length) * 100);
-            scoreDisplay.textContent = `${score}/${questions.length}`;
-            
-            let resultMessage = '';
-            if (percentage >= 90) {
-                resultMessage = 'Отлично! Вы настоящий эксперт в климатических поясах Земли!';
-            } else if (percentage >= 70) {
-                resultMessage = 'Хорошо! У вас солидные знания о климатических поясах.';
-            } else if (percentage >= 50) {
-                resultMessage = 'Неплохо! Вы знаете основы, но есть куда расти.';
-            } else {
-                resultMessage = 'Есть над чем поработать! Рекомендуем изучить материал еще раз.';
-            }
-            
-            resultText.textContent = resultMessage;
-        }
-
-        // Обновление смайлика в зависимости от рейтинга
-        function updateEmoji(rating) {
-            const emojis = ['😢', '😞', '😐', '🙂', '😊', '😄', '🤩', '🥳', '🎉', '🏆'];
-            emojiDisplay.textContent = emojis[rating - 1];
-        }
-
-        // Перезапуск викторины
-        function restartQuiz() {
-            currentQuestion = 0;
-            score = 0;
-            userAnswers = [];
-            selectedRating = 0;
-            
-            const ratingElements = ratingOptions.querySelectorAll('.rating-option');
-            ratingElements.forEach(el => el.classList.remove('selected'));
-            emojiDisplay.textContent = '😊';
-            
-            resultScreen.classList.add('hidden');
-            introScreen.classList.remove('hidden');
-        }
-
-        // Запуск при загрузке страницы
-        window.addEventListener('DOMContentLoaded', initQuiz);
-    </script>
+        });
+    })();
+</script>
 </body>
 </html>
